@@ -1,4 +1,4 @@
-package com.cursosufcg.cursosufcg;
+package com.cursosufcg;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
