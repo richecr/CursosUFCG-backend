@@ -19,6 +19,10 @@ public class Usuario {
 		this.ultimoNome = ultimoNome;
 		this.senha = senha;
 	}
+	
+	public Usuario() {
+		
+	}
 
 	public String getEmail() {
 		return email;
