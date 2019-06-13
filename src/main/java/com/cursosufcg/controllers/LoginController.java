@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cursosufcg.exceptions.autenticacao.LoginIncorretoException;
 import com.cursosufcg.models.LoginResponse;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.services.UsuarioService;
@@ -34,11 +35,11 @@ public class LoginController {
 		Usuario u = this.usuarioService.findByEmail(usuario.getEmail());
 		
 		if (u == null) {
-			throw new RuntimeException("Usuário não cadastrado!");
+			throw new LoginIncorretoException("Usuário não cadastrado!");
 		}
 		
 		if (!(u.getSenha().equals(usuario.getSenha()))) {
-			throw new RuntimeException("Autenticação incorreta!");
+			throw new LoginIncorretoException("Autenticação incorreta!");
 		}
 		
 		String token = Jwts.builder().

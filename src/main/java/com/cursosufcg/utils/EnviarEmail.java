@@ -5,6 +5,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.cursosufcg.exceptions.email.EmailNaoEnviadoException;
+
 @Service
 public class EnviarEmail {
 
@@ -20,8 +22,8 @@ public class EnviarEmail {
             mailSender.send(message);
             return "Email enviado com sucesso!";
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Erro ao enviar email.";
+            e.printStackTrace();           
+            throw new EmailNaoEnviadoException("Email digitado é incorreto!");
         }
 	}
 	

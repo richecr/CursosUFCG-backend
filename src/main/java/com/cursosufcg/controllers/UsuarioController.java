@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cursosufcg.exceptions.usuario.UsuarioJaExisteException;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.services.UsuarioService;
 import com.cursosufcg.utils.*;
@@ -38,7 +39,7 @@ public class UsuarioController {
 		Usuario u = this.usuarioService.create(usuario);
 
 		if (u == null) {
-			throw new RuntimeException("Não foi possivel cadastrar usuário!");
+			throw new UsuarioJaExisteException("Usuário já cadastrado");
 		}
 		this.enviarEmail.EnviarEmail(u.getEmail());
 		
@@ -47,6 +48,8 @@ public class UsuarioController {
 	
 	@DeleteMapping(value = "/{email}")
 	public ResponseEntity delete(@PathVariable String email) {
+		this.usuarioService.deleteById(email);
+
 		return new ResponseEntity(HttpStatus.OK);
 	}
 }

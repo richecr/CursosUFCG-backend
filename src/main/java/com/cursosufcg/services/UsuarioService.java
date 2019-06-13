@@ -2,6 +2,8 @@ package com.cursosufcg.services;
 
 import org.springframework.stereotype.Service;
 
+import com.cursosufcg.exceptions.usuario.UsuarioJaExisteException;
+import com.cursosufcg.exceptions.usuario.UsuarioNaoEncontradoException;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.repository.UsuarioDAO;
 
@@ -18,7 +20,7 @@ public class UsuarioService {
 		Usuario u = this.usuarioDAO.findByEmail(usuario.getEmail());
 		
 		if (u != null) {
-			throw new RuntimeException("Usuário com esse email já existe!");
+			throw new UsuarioJaExisteException("Usuário com esse email já existe!");
 		}
 		
 		return this.usuarioDAO.save(usuario);
@@ -28,13 +30,19 @@ public class UsuarioService {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		
 		if (u == null) {
-			throw new RuntimeException("Usuário não existe!");
+			throw new UsuarioNaoEncontradoException("Usuário não existe!");
 		}
 		
 		return u;
 	}
 
 	public void deleteById(String email) {
+		Usuario u = this.usuarioDAO.findByEmail(email);
+		
+		if (u == null) {
+			throw new UsuarioNaoEncontradoException("Usuário não existe!");
+		}
+		
 		this.usuarioDAO.deleteById(email);
 	}
 }
