@@ -33,4 +33,8 @@ public class UsuarioService {
 		
 		return u;
 	}
+
+	public void deleteById(String email) {
+		this.usuarioDAO.deleteById(email);
+	}
 }
