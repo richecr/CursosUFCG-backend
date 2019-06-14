@@ -1,4 +1,4 @@
-# [Cursos UFCG](link)
+# [Cursos UFCG](http://api-cursosufcg.herokuapp.com/api/)
 > Repositório para o Back-end do projeto da disciplina de Projeto de Software
 
 ## UCDb: classificações e reviews de cursos da UFCG
