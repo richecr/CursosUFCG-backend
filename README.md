@@ -8,7 +8,7 @@ O UFCG Cursos database é uma aplicação para classificação e reviews de disc
 
 ## Casos de Uso:
 
-- [ ] - Caso de uso 1: cadastrar/autenticar usuários.
+- [X] - Caso de uso 1: cadastrar/autenticar usuários.
 
   - Cadastrar usuários no sistema com primeiro nome, ultimo nome, e-mail e senha. O e-mail deve ser o identificador único dos usuários, assim se já existe um usuário com um certo e-mail, outro usuário com o mesmo e-mail não poderá ser cadastrado. Se usuário com o e-mail informado não existir ainda, ele deverá ser criado no sistema.
 
@@ -16,7 +16,7 @@ O UFCG Cursos database é uma aplicação para classificação e reviews de disc
 
   - Usuários cadastrados podem se autenticar em uma tela de login onde deve passar e-mail e senha. Um usuário que foi autenticado via email/senha deve receber um JWT. Esse token será usado posteriormente no header authorization HTTP, para interações futuras com a API.
 
-- [ ] - Caso de uso 2: pesquisar disciplinas a partir de uma (sub)string.
+- [X] - Caso de uso 2: pesquisar disciplinas a partir de uma (sub)string.
 
   - Deve ser possível recuperar o nome completo de disciplinas a partir de substrings. Por exemplo, ao pesquisar "laboratório" uma listagem de nomes e links para as disciplinas deve aparecer, ao estilo:
     
