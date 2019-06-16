@@ -1,7 +1,12 @@
 package com.cursosufcg.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Usuario {
@@ -12,12 +17,22 @@ public class Usuario {
 	private String ultimoNome;
 	private String senha;
 	
-	public Usuario(String email, String primeiroNome, String ultimoNome, String senha) {
+	@OneToMany
+	@JsonBackReference(value = "curtidas")
+	private List<Curtida> curtidas;
+	
+	@OneToMany
+	@JsonBackReference(value = "comentarios")
+	private List<Comentario> comentarios;
+
+	public Usuario(String email, String primeiroNome, String ultimoNome, String senha, List<Curtida> curtidas, List<Comentario> comentarios) {
 		super();
 		this.email = email;
 		this.primeiroNome = primeiroNome;
 		this.ultimoNome = ultimoNome;
 		this.senha = senha;
+		this.curtidas = curtidas;
+		this.comentarios = comentarios;
 	}
 	
 	public Usuario() {
@@ -54,5 +69,21 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public List<Curtida> getCurtidas() {
+		return curtidas;
+	}
+
+	public void setCurtidas(List<Curtida> curtidas) {
+		this.curtidas = curtidas;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 }
