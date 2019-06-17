@@ -6,8 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -22,19 +25,22 @@ public class Perfil {
 	private Disciplina disciplina;
 	
 	@OneToMany
-	private List<Curtida> curtidas;
-	
-	@OneToMany
 	private List<Comentario> comentarios;
+	
+	@ManyToMany
+	@JoinTable(name="perfil_curtidas", joinColumns=
+	{@JoinColumn(name="perfil_id")}, inverseJoinColumns=
+  	{@JoinColumn(name="usuario_email")})
+	private List<Usuario> curtidas;
 	
 	public Perfil() {
 	}
 
-	public Perfil(Disciplina disciplina, List<Curtida> curtidas, List<Comentario> comentarios) {
+	public Perfil(Disciplina disciplina, List<Comentario> comentarios, List<Usuario> curtidas) {
 		super();
 		this.disciplina = disciplina;
-		this.curtidas = curtidas;
 		this.comentarios = comentarios;
+		this.curtidas = curtidas;
 	}
 
 	public long getId() {
@@ -53,19 +59,19 @@ public class Perfil {
 		this.disciplina = disciplina;
 	}
 
-	public List<Curtida> getCurtidas() {
-		return curtidas;
-	}
-
-	public void setCurtidas(List<Curtida> curtidas) {
-		this.curtidas = curtidas;
-	}
-
 	public List<Comentario> getComentarios() {
 		return comentarios;
 	}
 
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
+	}
+
+	public List<Usuario> getCurtidas() {
+		return curtidas;
+	}
+
+	public void setCurtidas(List<Usuario> curtidas) {
+		this.curtidas = curtidas;
 	}
 }

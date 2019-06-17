@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -16,27 +17,25 @@ public class Usuario {
 	private String primeiroNome;
 	private String ultimoNome;
 	private String senha;
-	
-	@OneToMany
-	@JsonBackReference(value = "curtidas")
-	private List<Curtida> curtidas;
-	
-	@OneToMany
-	@JsonBackReference(value = "comentarios")
-	private List<Comentario> comentarios;
 
-	public Usuario(String email, String primeiroNome, String ultimoNome, String senha, List<Curtida> curtidas, List<Comentario> comentarios) {
+	@OneToMany
+	private List<Comentario> comentarios;
+	
+	@ManyToMany(mappedBy = "curtidas")
+	@JsonBackReference
+	private List<Perfil> curtidas;
+	
+	public Usuario() {
+	}
+	
+	public Usuario(String email, String primeiroNome, String ultimoNome, String senha, List<Comentario> comentarios, List<Perfil> curtidas) {
 		super();
 		this.email = email;
 		this.primeiroNome = primeiroNome;
 		this.ultimoNome = ultimoNome;
 		this.senha = senha;
-		this.curtidas = curtidas;
 		this.comentarios = comentarios;
-	}
-	
-	public Usuario() {
-		
+		this.curtidas = curtidas;
 	}
 
 	public String getEmail() {
@@ -71,19 +70,11 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public List<Curtida> getCurtidas() {
+	public List<Perfil> getCurtidas() {
 		return curtidas;
 	}
 
-	public void setCurtidas(List<Curtida> curtidas) {
+	public void setCurtidas(List<Perfil> curtidas) {
 		this.curtidas = curtidas;
-	}
-
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
 	}
 }

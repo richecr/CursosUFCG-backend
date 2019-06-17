@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cursosufcg.models.Comentario;
-import com.cursosufcg.models.Curtida;
+
 import com.cursosufcg.models.Disciplina;
 import com.cursosufcg.models.Perfil;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.repository.ComentarioDAO;
-import com.cursosufcg.repository.CurtidaDAO;
 import com.cursosufcg.repository.DisciplinaDAO;
 import com.cursosufcg.repository.PerfilDAO;
 import com.cursosufcg.repository.UsuarioDAO;
@@ -24,9 +23,6 @@ public class PerfilService {
 	
 	@Autowired
 	private DisciplinaDAO disciplinaDAO;
-	
-	@Autowired
-	private CurtidaDAO curtidaDAO;
 	
 	@Autowired
 	private ComentarioDAO comentarioDAO;
@@ -43,29 +39,27 @@ public class PerfilService {
 
 	public Perfil findById(long id) {
 		Perfil p = this.perfilDAO.findById(id);
-		p.setCurtidas(this.getAllCurtidas(id));
 		p.setComentarios(this.getAllComentarios(id));
-
+		
 		return p;
 	}
-
+	
 	public List<Perfil> findAll() {
 		return this.perfilDAO.findAll();
 	}
 	
-	public Curtida createCurtida(long id, String email, Curtida curtida) {
+	public Perfil createCurtida(long id, String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
-		curtida.setUsuario(u);
-		curtida.setPerfil(p);
+		p.getCurtidas().add(u);
 
-		return this.curtidaDAO.save(curtida);
+		return this.perfilDAO.save(p);
 	}
 	
-	public List<Curtida> getAllCurtidas(long id) {
+	public List<Usuario> getAllCurtidas(long id) {
 		Perfil p = this.perfilDAO.findById(id);
 		
-		return this.curtidaDAO.findByPerfil(p);
+		return p.getCurtidas();
 	}
 	
 	public Comentario createComentario(long id, String email, Comentario comentario) {

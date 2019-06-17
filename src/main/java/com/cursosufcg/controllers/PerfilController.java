@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cursosufcg.models.Comentario;
-import com.cursosufcg.models.Curtida;
 import com.cursosufcg.models.Perfil;
+import com.cursosufcg.models.Usuario;
 import com.cursosufcg.services.PerfilService;
 
 @RestController
@@ -30,7 +30,7 @@ public class PerfilController {
 	public ResponseEntity<Perfil> create(@PathVariable long idDisciplina, @RequestBody Perfil perfil) {
 		return new ResponseEntity<Perfil>( this.perfilService.create(idDisciplina, perfil), HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Perfil> findPerfil(@PathVariable long id) {
 		
@@ -44,8 +44,8 @@ public class PerfilController {
 	
 	@PostMapping(value = "/curtir/{id}/{email}")
 	@ResponseBody
-	public ResponseEntity<Curtida> curtir(@PathVariable long id, @PathVariable String email, @RequestBody Curtida curtida) {
-		return new ResponseEntity<Curtida>( this.perfilService.createCurtida(id, email, curtida), HttpStatus.CREATED);
+	public ResponseEntity<Perfil> curtir(@PathVariable long id, @PathVariable String email) {
+		return new ResponseEntity<Perfil>( this.perfilService.createCurtida(id, email), HttpStatus.CREATED);
 	}
 	
 	@PostMapping(value = "/comentar/{id}/{email}")
