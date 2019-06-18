@@ -44,14 +44,24 @@ public class PerfilService {
 		return this.perfilDAO.save(perfil);
 	}
 
-	public Perfil findById(long id) {
+	public Perfil findById(long id, String email) {
 		Perfil p = this.perfilDAO.findById(id);
 		if (p == null) {
 			throw new RuntimeException("Perfil para essa disciplina não existe!");
 		}
 		p.setComentarios(this.getAllComentarios(id));
-		
+		this.verificaUsuarioCurtiu(p, email);
+
 		return p;
+	}
+	
+	private void verificaUsuarioCurtiu(Perfil perfil, String email) {
+		Usuario u = this.usuarioDAO.findByEmail(email);
+		if (perfil.getCurtidas().contains(u)) {
+			perfil.setUsuarioAutenticadoCurtiu(true);
+		} else {
+			perfil.setUsuarioAutenticadoCurtiu(false);
+		}
 	}
 	
 	public List<Perfil> findAll() {

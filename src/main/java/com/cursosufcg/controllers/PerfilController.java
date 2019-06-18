@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,9 +33,8 @@ public class PerfilController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Perfil> findPerfil(@PathVariable long id) {
-		
-		return new ResponseEntity<Perfil>(this.perfilService.findById(id), HttpStatus.OK);
+	public ResponseEntity<Perfil> findPerfil(@PathVariable long id, @RequestParam(name="email", required=true) String email) {
+		return new ResponseEntity<Perfil>(this.perfilService.findById(id, email), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/")

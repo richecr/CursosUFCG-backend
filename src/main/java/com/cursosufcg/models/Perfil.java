@@ -28,6 +28,9 @@ public class Perfil {
   	{@JoinColumn(name="usuario_email")})
 	private List<Usuario> curtidas;
 
+	@Transient
+	private boolean usuarioAutenticadoCurtiu;
+	
 	public Perfil() {
 	}
 
@@ -68,5 +71,13 @@ public class Perfil {
 
 	public void setCurtidas(List<Usuario> curtidas) {
 		this.curtidas = curtidas;
+	}
+
+	public boolean isUsuarioAutenticadoCurtiu() {
+		return usuarioAutenticadoCurtiu;
+	}
+
+	public void setUsuarioAutenticadoCurtiu(boolean usuarioAutenticadoCurtiu) {
+		this.usuarioAutenticadoCurtiu = usuarioAutenticadoCurtiu;
 	}
 }
