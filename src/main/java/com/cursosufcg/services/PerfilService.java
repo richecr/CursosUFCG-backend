@@ -61,7 +61,11 @@ public class PerfilService {
 	public Perfil createCurtida(long id, String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
-		p.getCurtidas().add(u);
+		if (p.getCurtidas().contains(u)) {
+			p.getCurtidas().remove(u);
+		} else {
+			p.getCurtidas().add(u);
+		}
 
 		return this.perfilDAO.save(p);
 	}
