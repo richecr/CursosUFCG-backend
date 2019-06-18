@@ -2,7 +2,6 @@ package com.cursosufcg.services;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.time.LocalTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +33,22 @@ public class PerfilService {
 	private UsuarioDAO usuarioDAO;
 	
 	public Perfil create(long id, Perfil perfil) {
+		Perfil p = this.perfilDAO.findById(id);
+		if (p != null) {
+			throw new RuntimeException("Perfil para essa disciplina já existe!");
+		}
 		Disciplina d = this.disciplinaDAO.findById(id);
 		perfil.setId(id);
 		perfil.setDisciplina(d);
-		
+
 		return this.perfilDAO.save(perfil);
 	}
 
 	public Perfil findById(long id) {
 		Perfil p = this.perfilDAO.findById(id);
+		if (p == null) {
+			throw new RuntimeException("Perfil para essa disciplina não existe!");
+		}
 		p.setComentarios(this.getAllComentarios(id));
 		
 		return p;
@@ -71,7 +77,6 @@ public class PerfilService {
 		Perfil p = this.perfilDAO.findById(id);
 		comentario.setUsuario(u);
 		comentario.setPerfil(p);
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		comentario.setDate(new Date());
 		
 		return this.comentarioDAO.save(comentario);
