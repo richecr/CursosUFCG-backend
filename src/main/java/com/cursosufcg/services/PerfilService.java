@@ -1,6 +1,9 @@
 package com.cursosufcg.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.time.LocalTime;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,8 +71,9 @@ public class PerfilService {
 		Perfil p = this.perfilDAO.findById(id);
 		comentario.setUsuario(u);
 		comentario.setPerfil(p);
-		// TODO Pegar a data e hora atual.
-
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		comentario.setDate(new Date());
+		
 		return this.comentarioDAO.save(comentario);
 	}
 	
