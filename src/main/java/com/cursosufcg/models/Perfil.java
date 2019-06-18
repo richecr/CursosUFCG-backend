@@ -18,25 +18,24 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Perfil {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	
+
 	@OneToOne
 	private Disciplina disciplina;
-	
+
 	@OneToMany
 	private List<Comentario> comentarios;
-	
+
 	@ManyToMany
 	@JoinTable(name="perfil_curtidas", joinColumns=
 	{@JoinColumn(name="perfil_id")}, inverseJoinColumns=
   	{@JoinColumn(name="usuario_email")})
 	private List<Usuario> curtidas;
-	
+
 	public Perfil() {
 	}
 
-	public Perfil(Disciplina disciplina, List<Comentario> comentarios, List<Usuario> curtidas) {
+	public Perfil(long id, Disciplina disciplina, List<Comentario> comentarios, List<Usuario> curtidas) {
 		super();
 		this.disciplina = disciplina;
 		this.comentarios = comentarios;

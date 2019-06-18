@@ -21,7 +21,6 @@ public class Comentario {
 	private long id;
 	
 	@ManyToOne
-	@JsonBackReference(value = "usuario")
 	private Usuario usuario;
 	
 	@ManyToOne

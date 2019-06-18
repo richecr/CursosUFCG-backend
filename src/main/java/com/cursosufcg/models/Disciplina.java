@@ -1,5 +1,6 @@
 package com.cursosufcg.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,12 +11,11 @@ public class Disciplina {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long Id;
+	private long id;
 	
 	private String nome;
 	
 	public Disciplina() {
-		
 	}
 	
 	public Disciplina(String nome) {
@@ -29,12 +29,12 @@ public class Disciplina {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public long getId() {
-		return Id;
+		return id;
 	}
-	
+
 	public void setId(long id) {
-		Id = id;
+		this.id = id;
 	}
 }

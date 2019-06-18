@@ -32,6 +32,7 @@ public class PerfilService {
 	
 	public Perfil create(long id, Perfil perfil) {
 		Disciplina d = this.disciplinaDAO.findById(id);
+		perfil.setId(id);
 		perfil.setDisciplina(d);
 		
 		return this.perfilDAO.save(perfil);
