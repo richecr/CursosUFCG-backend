@@ -25,10 +25,14 @@ public class Usuario {
 	@JsonBackReference
 	private List<Perfil> curtidas;
 	
+	@OneToMany
+	private List<Nota> notasDePerfilsAvaliados;
+
 	public Usuario() {
 	}
 	
-	public Usuario(String email, String primeiroNome, String ultimoNome, String senha, List<Comentario> comentarios, List<Perfil> curtidas) {
+	public Usuario(String email, String primeiroNome, String ultimoNome, String senha, List<Comentario> comentarios, List<Perfil> curtidas,
+			  	   List<Nota> notasDePerfilsAvaliados) {
 		super();
 		this.email = email;
 		this.primeiroNome = primeiroNome;
@@ -36,6 +40,7 @@ public class Usuario {
 		this.senha = senha;
 		this.comentarios = comentarios;
 		this.curtidas = curtidas;
+		this.notasDePerfilsAvaliados = notasDePerfilsAvaliados;
 	}
 
 	public String getEmail() {
@@ -76,5 +81,21 @@ public class Usuario {
 
 	public void setCurtidas(List<Perfil> curtidas) {
 		this.curtidas = curtidas;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public List<Nota> getNotasDePerfilsAvaliados() {
+		return notasDePerfilsAvaliados;
+	}
+
+	public void setNotasDePerfilsAvaliados(List<Nota> notasDePerfilsAvaliados) {
+		this.notasDePerfilsAvaliados = notasDePerfilsAvaliados;
 	}
 }

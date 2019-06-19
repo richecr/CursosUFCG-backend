@@ -11,10 +11,12 @@ import com.cursosufcg.exceptions.usuario.UsuarioNaoEncontradoException;
 import com.cursosufcg.models.Comentario;
 
 import com.cursosufcg.models.Disciplina;
+import com.cursosufcg.models.Nota;
 import com.cursosufcg.models.Perfil;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.repository.ComentarioDAO;
 import com.cursosufcg.repository.DisciplinaDAO;
+import com.cursosufcg.repository.NotaDAO;
 import com.cursosufcg.repository.PerfilDAO;
 import com.cursosufcg.repository.UsuarioDAO;
 
@@ -23,16 +25,19 @@ public class PerfilService {
 
 	@Autowired
 	private PerfilDAO perfilDAO;
-	
+
 	@Autowired
 	private DisciplinaDAO disciplinaDAO;
-	
+
 	@Autowired
 	private ComentarioDAO comentarioDAO;
-	
+
 	@Autowired
 	private UsuarioDAO usuarioDAO;
-	
+
+	@Autowired
+	private NotaDAO notaDAO;
+
 	public Perfil create(long id, Perfil perfil) {
 		Perfil p = this.perfilDAO.findById(id);
 		if (p != null) {
@@ -44,6 +49,10 @@ public class PerfilService {
 
 		return this.perfilDAO.save(perfil);
 	}
+	
+	public List<Perfil> findAll() {
+		return this.perfilDAO.findAll();
+	}
 
 	public Perfil findById(long id, String email) {
 		Perfil p = this.perfilDAO.findById(id);
@@ -52,35 +61,15 @@ public class PerfilService {
 		}
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		p.setComentarios(this.getAllComentarios(id));
+		p.setNotasDeUsuarios(this.getAllNotas(id));
+		
 		this.verificaComentarioDoUsuario(p, u);
 		this.verificaUsuarioCurtiu(p, u);
-
+		this.calculaMedia(p);
+		
 		return p;
 	}
-	
-	private void verificaUsuarioCurtiu(Perfil perfil, Usuario usuario) {
-		if (perfil.getCurtidas().contains(usuario)) {
-			perfil.setUsuarioAutenticadoCurtiu(true);
-		} else {
-			perfil.setUsuarioAutenticadoCurtiu(false);
-		}
-	}
-	
-	private void verificaComentarioDoUsuario(Perfil perfil, Usuario usuario) {
-		List<Comentario> comentarios = perfil.getComentarios();
-		for (Comentario comentario : comentarios) {
-			if (comentario.getUsuario().equals(usuario)) {
-				comentario.setComentarioDoUsuarioAutenticado(true);
-			} else {
-				comentario.setComentarioDoUsuarioAutenticado(false);
-			}
-		}
-	}
-	
-	public List<Perfil> findAll() {
-		return this.perfilDAO.findAll();
-	}
-	
+
 	public Perfil createCurtida(long id, String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
@@ -92,13 +81,7 @@ public class PerfilService {
 
 		return this.perfilDAO.save(p);
 	}
-	
-	public List<Usuario> getAllCurtidas(long id) {
-		Perfil p = this.perfilDAO.findById(id);
-		
-		return p.getCurtidas();
-	}
-	
+
 	public Comentario createComentario(long id, String email, Comentario comentario) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
@@ -117,9 +100,69 @@ public class PerfilService {
 		return this.comentarioDAO.save(comentario);
 	}
 	
+	public Nota createNota(long id, String email, Nota nota) {
+		Usuario u = this.usuarioDAO.findByEmail(email);
+		Perfil p = this.perfilDAO.findById(id);
+		if (u == null) {
+			throw new UsuarioNaoEncontradoException("Usuário não cadastrado");
+		}
+		if (p == null) {
+			throw new RuntimeException("Perfil não existe");
+		}
+
+		nota.setPerfil(p);
+		nota.setUsuario(u);
+		
+		return this.notaDAO.save(nota);
+	}
+	
+	public List<Usuario> getAllCurtidas(long id) {
+		Perfil p = this.perfilDAO.findById(id);
+		
+		return p.getCurtidas();
+	}
+
 	public List<Comentario> getAllComentarios(long id) {
 		Perfil p = this.perfilDAO.findById(id);
 		
 		return this.comentarioDAO.findByPerfil(p);
+	}
+	
+	private List<Nota> getAllNotas(long id) {
+		Perfil p = this.perfilDAO.findById(id);
+		
+		return this.notaDAO.findByPerfil(p);
+	}
+	
+	private void verificaUsuarioCurtiu(Perfil perfil, Usuario usuario) {
+		if (perfil.getCurtidas().contains(usuario)) {
+			perfil.setUsuarioAutenticadoCurtiu(true);
+		} else {
+			perfil.setUsuarioAutenticadoCurtiu(false);
+		}
+	}
+
+	private void verificaComentarioDoUsuario(Perfil perfil, Usuario usuario) {
+		List<Comentario> comentarios = perfil.getComentarios();
+		for (Comentario comentario : comentarios) {
+			if (comentario.getUsuario().equals(usuario)) {
+				comentario.setComentarioDoUsuarioAutenticado(true);
+			} else {
+				comentario.setComentarioDoUsuarioAutenticado(false);
+			}
+		}
+	}
+	
+	private void calculaMedia(Perfil perfil) {
+		List<Nota> notas = perfil.getNotasDeUsuarios();
+		double soma = 0;
+		double media = 0;
+		if (!notas.isEmpty()) {
+			for (Nota nota : notas) {
+				soma += nota.getNota();
+			}
+			media = soma / (notas.size());	
+			perfil.setMedia(media);
+		}
 	}
 }

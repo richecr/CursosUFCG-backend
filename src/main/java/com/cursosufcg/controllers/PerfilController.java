@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cursosufcg.models.Comentario;
+import com.cursosufcg.models.Nota;
 import com.cursosufcg.models.Perfil;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.services.PerfilService;
@@ -52,5 +53,11 @@ public class PerfilController {
 	@ResponseBody
 	public ResponseEntity<Comentario> comentar(@PathVariable long id, @PathVariable String email, @RequestBody Comentario comentario) {
 		return new ResponseEntity<Comentario>( this.perfilService.createComentario(id, email, comentario), HttpStatus.CREATED);
+	}
+	
+	@PostMapping(value = "/avaliar/{id}/{email}")
+	@ResponseBody
+	public ResponseEntity<Nota> avaliarPerfil(@PathVariable long id,@PathVariable String email, @RequestBody Nota nota) {
+		return new ResponseEntity<Nota>( this.perfilService.createNota(id, email, nota), HttpStatus.OK);
 	}
 }

@@ -31,14 +31,23 @@ public class Perfil {
 	@Transient
 	private boolean usuarioAutenticadoCurtiu;
 	
+	@OneToMany
+	private List<Nota> notasDeUsuarios;
+	
+	@Transient
+	private double media;
+	
 	public Perfil() {
 	}
 
-	public Perfil(long id, Disciplina disciplina, List<Comentario> comentarios, List<Usuario> curtidas) {
+	public Perfil(long id, Disciplina disciplina, List<Comentario> comentarios,
+				  List<Usuario> curtidas, List<Nota> notasDeUsuarios, double media) {
 		super();
 		this.disciplina = disciplina;
 		this.comentarios = comentarios;
 		this.curtidas = curtidas;
+		this.notasDeUsuarios = notasDeUsuarios;
+		this.media = media;
 	}
 
 	public long getId() {
@@ -79,5 +88,21 @@ public class Perfil {
 
 	public void setUsuarioAutenticadoCurtiu(boolean usuarioAutenticadoCurtiu) {
 		this.usuarioAutenticadoCurtiu = usuarioAutenticadoCurtiu;
+	}
+
+	public List<Nota> getNotasDeUsuarios() {
+		return notasDeUsuarios;
+	}
+
+	public void setNotasDeUsuarios(List<Nota> notasDeUsuarios) {
+		this.notasDeUsuarios = notasDeUsuarios;
+	}
+
+	public double getMedia() {
+		return media;
+	}
+
+	public void setMedia(double media) {
+		this.media = media;
 	}
 }
