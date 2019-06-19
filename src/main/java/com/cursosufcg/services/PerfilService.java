@@ -1,6 +1,5 @@
 package com.cursosufcg.services;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Date;
 
@@ -103,19 +102,28 @@ public class PerfilService {
 	public Nota createNota(long id, String email, Nota nota) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
+
 		if (u == null) {
 			throw new UsuarioNaoEncontradoException("Usuário não cadastrado");
 		}
+
 		if (p == null) {
 			throw new RuntimeException("Perfil não existe");
 		}
 
-		nota.setPerfil(p);
-		nota.setUsuario(u);
-		
-		return this.notaDAO.save(nota);
+		Nota n = this.notaDAO.findByUsuarioPerfil(u, p);
+		if (n != null) {
+			n.setNota(nota.getNota());
+
+			return this.notaDAO.save(n);
+		} else {
+			nota.setPerfil(p);
+			nota.setUsuario(u);
+
+			return this.notaDAO.save(nota);
+		}
 	}
-	
+
 	public List<Usuario> getAllCurtidas(long id) {
 		Perfil p = this.perfilDAO.findById(id);
 		
