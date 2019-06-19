@@ -43,16 +43,20 @@ public class Comentario {
 	@Transient
 	private boolean comentarioDoUsuarioAutenticado;
 	
+	private boolean apagado;
+	
 	public Comentario() {
 	}
 
-	public Comentario(Usuario usuario, Perfil perfil, Date date, List<Comentario> respostas, Comentario respostasPai) {
+	public Comentario(Usuario usuario, Perfil perfil, Date date, List<Comentario> respostas, 
+					  Comentario respostasPai, boolean apagado) {
 		super();
 		this.usuario = usuario;
 		this.perfil = perfil;
 		this.date = date;
 		this.respostas = respostas;
 		this.respostasPai = respostasPai;
+		this.apagado = apagado;
 	}
 
 	public long getId() {
@@ -117,5 +121,13 @@ public class Comentario {
 
 	public void setComentarioDoUsuarioAutenticado(boolean comentarioDoUsuarioAutenticado) {
 		this.comentarioDoUsuarioAutenticado = comentarioDoUsuarioAutenticado;
+	}
+
+	public boolean isApagado() {
+		return apagado;
+	}
+
+	public void setApagado(boolean apagado) {
+		this.apagado = apagado;
 	}
 }

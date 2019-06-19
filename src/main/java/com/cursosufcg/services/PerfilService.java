@@ -133,7 +133,7 @@ public class PerfilService {
 	public List<Comentario> getAllComentarios(long id) {
 		Perfil p = this.perfilDAO.findById(id);
 		
-		return this.comentarioDAO.findByPerfil(p);
+		return this.comentarioDAO.findComentariosNaoApagadosByPerfil(p);
 	}
 	
 	private List<Nota> getAllNotas(long id) {
@@ -172,5 +172,26 @@ public class PerfilService {
 			media = soma / (notas.size());	
 			perfil.setMedia(media);
 		}
+	}
+
+	public Comentario apagaComentario(long idPerfil, long idComentario, String email) {
+		Perfil perfil = this.perfilDAO.findById(idPerfil);
+		Usuario usuario = this.usuarioDAO.findByEmail(email);
+		
+		if (usuario == null) {
+			throw new UsuarioNaoEncontradoException("Usuário não cadastrado");
+		}
+
+		if (perfil == null) {
+			throw new RuntimeException("Perfil não existe");
+		}
+
+		Comentario comentario = this.comentarioDAO.findById(idComentario);
+		if (comentario == null) {
+			throw new RuntimeException("Comentário não existe!");
+		}
+
+		comentario.setApagado(true);
+		return this.comentarioDAO.save(comentario);
 	}
 }
