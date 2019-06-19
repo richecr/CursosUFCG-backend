@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -38,6 +39,9 @@ public class Comentario {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id", updatable = false, insertable = false)
 	private Comentario respostasPai;
+	
+	@Transient
+	private boolean comentarioDoUsuarioAutenticado;
 	
 	public Comentario() {
 	}
@@ -105,5 +109,13 @@ public class Comentario {
 
 	public void setRespostasPai(Comentario respostasPai) {
 		this.respostasPai = respostasPai;
+	}
+
+	public boolean isComentarioDoUsuarioAutenticado() {
+		return comentarioDoUsuarioAutenticado;
+	}
+
+	public void setComentarioDoUsuarioAutenticado(boolean comentarioDoUsuarioAutenticado) {
+		this.comentarioDoUsuarioAutenticado = comentarioDoUsuarioAutenticado;
 	}
 }

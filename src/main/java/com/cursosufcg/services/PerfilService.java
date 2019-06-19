@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cursosufcg.exceptions.usuario.UsuarioNaoEncontradoException;
 import com.cursosufcg.models.Comentario;
 
 import com.cursosufcg.models.Disciplina;
@@ -49,18 +50,30 @@ public class PerfilService {
 		if (p == null) {
 			throw new RuntimeException("Perfil para essa disciplina não existe!");
 		}
+		Usuario u = this.usuarioDAO.findByEmail(email);
 		p.setComentarios(this.getAllComentarios(id));
-		this.verificaUsuarioCurtiu(p, email);
+		this.verificaComentarioDoUsuario(p, u);
+		this.verificaUsuarioCurtiu(p, u);
 
 		return p;
 	}
 	
-	private void verificaUsuarioCurtiu(Perfil perfil, String email) {
-		Usuario u = this.usuarioDAO.findByEmail(email);
-		if (perfil.getCurtidas().contains(u)) {
+	private void verificaUsuarioCurtiu(Perfil perfil, Usuario usuario) {
+		if (perfil.getCurtidas().contains(usuario)) {
 			perfil.setUsuarioAutenticadoCurtiu(true);
 		} else {
 			perfil.setUsuarioAutenticadoCurtiu(false);
+		}
+	}
+	
+	private void verificaComentarioDoUsuario(Perfil perfil, Usuario usuario) {
+		List<Comentario> comentarios = perfil.getComentarios();
+		for (Comentario comentario : comentarios) {
+			if (comentario.getUsuario().equals(usuario)) {
+				comentario.setComentarioDoUsuarioAutenticado(true);
+			} else {
+				comentario.setComentarioDoUsuarioAutenticado(false);
+			}
 		}
 	}
 	
@@ -89,6 +102,14 @@ public class PerfilService {
 	public Comentario createComentario(long id, String email, Comentario comentario) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
+		if (u == null) {
+			throw new UsuarioNaoEncontradoException("Usuário não cadastrado");
+		}
+
+		if (p == null) {
+			throw new RuntimeException("Perfil não existe");
+		}
+		
 		comentario.setUsuario(u);
 		comentario.setPerfil(p);
 		comentario.setDate(new Date());
