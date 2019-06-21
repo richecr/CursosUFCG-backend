@@ -55,6 +55,18 @@ public class PerfilController {
 	public ResponseEntity<Comentario> comentar(@PathVariable long id, @PathVariable String email, @RequestBody Comentario comentario) {
 		return new ResponseEntity<Comentario>( this.perfilService.createComentario(id, email, comentario), HttpStatus.CREATED);
 	}
+	
+	@PostMapping(value = "/responderComentario/{idComentario}/{email}")
+	@ResponseBody
+	public ResponseEntity<Comentario> responderComentario(@PathVariable long idComentario, @PathVariable String email, @RequestBody Comentario comentario) {
+		return new ResponseEntity<Comentario>( this.perfilService.createResponderComentario(idComentario, email, comentario), HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value = "/comentario/{idComentario}")
+	@ResponseBody
+	public ResponseEntity<Comentario> getComentario(@PathVariable long idComentario) {
+		return new ResponseEntity<Comentario>( this.perfilService.getComentario(idComentario), HttpStatus.CREATED);
+	}
 
 	@PostMapping(value = "/avaliar/{id}/{email}")
 	@ResponseBody

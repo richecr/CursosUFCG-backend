@@ -33,7 +33,6 @@ public class Comentario {
 	private Date date;
 	
 	@OneToMany
-	@JsonBackReference(value = "respostas")
 	private List<Comentario> respostas;
 	
 	@ManyToOne

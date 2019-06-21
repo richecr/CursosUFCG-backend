@@ -99,6 +99,18 @@ public class PerfilService {
 		return this.comentarioDAO.save(comentario);
 	}
 	
+	public Comentario createResponderComentario(long idComentario, String email, Comentario comentario) {
+		Comentario c = this.comentarioDAO.findById(idComentario);
+		Usuario usuario = this.usuarioDAO.findByEmail(email);
+
+		c.getRespostas().add(comentario);
+		comentario.setUsuario(usuario);
+		comentario.setRespostasPai(c);
+		comentario.setDate(new Date());
+		
+		return this.comentarioDAO.save(comentario);
+	}
+	
 	public Nota createNota(long id, String email, Nota nota) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
@@ -193,5 +205,9 @@ public class PerfilService {
 
 		comentario.setApagado(true);
 		return this.comentarioDAO.save(comentario);
+	}
+
+	public Comentario getComentario(long idComentario) {
+		return this.comentarioDAO.findById(idComentario);
 	}
 }
