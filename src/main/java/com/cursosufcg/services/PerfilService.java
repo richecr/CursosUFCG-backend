@@ -55,13 +55,16 @@ public class PerfilService {
 
 	public Perfil findById(long id, String email) {
 		Perfil p = this.perfilDAO.findById(id);
+		Usuario u = this.usuarioDAO.findByEmail(email);
 		if (p == null) {
 			throw new RuntimeException("Perfil para essa disciplina não existe!");
 		}
-		Usuario u = this.usuarioDAO.findByEmail(email);
+		if (u == null) {
+			throw new RuntimeException("Usuário não existe!");
+		}
+
 		p.setComentarios(this.getAllComentarios(id));
-		p.setNotasDeUsuarios(this.getAllNotas(id));
-		
+		p.setNotasDeUsuarios(this.getAllNotas(id));		
 		this.verificaComentarioDoUsuario(p, u);
 		this.verificaUsuarioCurtiu(p, u);
 		this.calculaMedia(p);
@@ -163,12 +166,23 @@ public class PerfilService {
 	}
 
 	private void verificaComentarioDoUsuario(Perfil perfil, Usuario usuario) {
-		List<Comentario> comentarios = perfil.getComentarios();
+		List<Comentario> comentarios = this.comentarioDAO.findByPerfil(perfil);
 		for (Comentario comentario : comentarios) {
 			if (comentario.getUsuario().equals(usuario)) {
 				comentario.setComentarioDoUsuarioAutenticado(true);
 			} else {
 				comentario.setComentarioDoUsuarioAutenticado(false);
+			}
+			this.verificaRespostaDeComentariosDoUsuario(usuario, comentario);
+		}
+	}
+	
+	private void verificaRespostaDeComentariosDoUsuario(Usuario usuario, Comentario comentario) {
+		for (Comentario resposta : comentario.getRespostas()) {
+			if (resposta.getUsuario().equals(usuario)) {
+				resposta.setComentarioDoUsuarioAutenticado(true);
+			} else {
+				resposta.setComentarioDoUsuarioAutenticado(false);
 			}
 		}
 	}

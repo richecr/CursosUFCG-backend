@@ -37,6 +37,7 @@ public class Comentario {
 	
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id", updatable = false, insertable = false)
+	@JsonBackReference(value = "pai")
 	private Comentario respostasPai;
 	
 	@Transient

@@ -24,4 +24,7 @@ public interface ComentarioDAO extends JpaRepository<Comentario, Long> {
 	@Query("SELECT c FROM Comentario c WHERE c.perfil = :perfil and c.apagado = false")
 	public List<Comentario> findComentariosNaoApagadosByPerfil(@Param("perfil") Perfil perfil);
 
+	@Query("SELECT c.respostas FROM Comentario c WHERE c = :comentario")
+	public List<Comentario> getRespostasComentario(@Param("comentario") Comentario comentario);
+	
 }
