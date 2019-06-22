@@ -29,26 +29,26 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/{email}")
-	public ResponseEntity<Usuario> listaUsuario(@PathVariable String email) {
-		return new ResponseEntity<Usuario>( this.usuarioService.findByEmail(email), HttpStatus.OK );
+	public ResponseEntity<Usuario> listarUsuario(@PathVariable String email) {
+		return new ResponseEntity<Usuario>( this.usuarioService.buscarPorEmail(email), HttpStatus.OK );
 	}
 	
 	@PostMapping(value = "/")
 	@ResponseBody
-	public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
-		Usuario u = this.usuarioService.create(usuario);
+	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
+		Usuario u = this.usuarioService.cadastrarUsuario(usuario);
 
 		if (u == null) {
 			throw new UsuarioJaExisteException("Usuário já cadastrado");
 		}
-		this.enviarEmail.EnviarEmail(u.getEmail());
+		this.enviarEmail.enviarEmail(u.getEmail());
 		
 		return new ResponseEntity<Usuario>( u, HttpStatus.CREATED );
 	}
 	
 	@DeleteMapping(value = "/{email}")
-	public ResponseEntity delete(@PathVariable String email) {
-		this.usuarioService.deleteById(email);
+	public ResponseEntity deletarUsuario(@PathVariable String email) {
+		this.usuarioService.deletarPeloId(email);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}

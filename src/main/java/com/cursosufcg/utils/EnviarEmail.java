@@ -13,7 +13,7 @@ public class EnviarEmail {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	public String EnviarEmail(String emailDestinatario) {
+	public String enviarEmail(String emailDestinatario) {
 		SimpleMailMessage message = new SimpleMailMessage();
         message.setText("Bem-vindo ao sistema de Cursos da UFCG!");
         message.setTo(emailDestinatario);

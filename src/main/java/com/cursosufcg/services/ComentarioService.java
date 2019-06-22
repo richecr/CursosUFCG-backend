@@ -26,7 +26,7 @@ public class ComentarioService {
 	@Autowired
 	private PerfilDAO perfilDAO;
 	
-	public Comentario create(long id, String email, Comentario comentario) {
+	public Comentario comentar(long id, String email, Comentario comentario) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
 		if (u == null) {
@@ -42,7 +42,7 @@ public class ComentarioService {
 		return this.comentarioDAO.save(comentario);
 	}
 	
-	public Comentario createResponderComentario(long idComentario, String email, Comentario comentario) {
+	public Comentario responderComentario(long idComentario, String email, Comentario comentario) {
 		Comentario c = this.comentarioDAO.findById(idComentario);
 		Usuario usuario = this.usuarioDAO.findByEmail(email);
 
@@ -78,7 +78,7 @@ public class ComentarioService {
 		}
 	}
 	
-	public Comentario apagaComentario(long idPerfil, long idComentario, String email) {
+	public Comentario apagarComentario(long idPerfil, long idComentario, String email) {
 		Perfil perfil = this.perfilDAO.findById(idPerfil);
 		Usuario usuario = this.usuarioDAO.findByEmail(email);
 		
@@ -94,12 +94,16 @@ public class ComentarioService {
 		if (comentario == null) {
 			throw new RuntimeException("Comentário não existe!");
 		}
+		
+		if (!comentario.getUsuario().equals(usuario)) {
+			throw new RuntimeException("Este Usuário não é dono do comentário!");
+		}
 
 		comentario.setApagado(true);
 		return this.comentarioDAO.save(comentario);
 	}
-	
-	public List<Comentario> findByUsuario(String email) {
+
+	public List<Comentario> buscarPorUsuario(String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		if (u == null) {
 			throw new RuntimeException("Usuario não existe!");

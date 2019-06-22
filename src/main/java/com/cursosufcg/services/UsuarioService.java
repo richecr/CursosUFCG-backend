@@ -16,7 +16,7 @@ public class UsuarioService {
 		this.usuarioDAO = usuarioDAO;
 	}
 	
-	public Usuario create(Usuario usuario) {
+	public Usuario cadastrarUsuario(Usuario usuario) {
 		Usuario u = this.usuarioDAO.findByEmail(usuario.getEmail());
 		
 		if (u != null) {
@@ -26,7 +26,7 @@ public class UsuarioService {
 		return this.usuarioDAO.save(usuario);
 	}
 
-	public Usuario findByEmail(String email) {
+	public Usuario buscarPorEmail(String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		
 		if (u == null) {
@@ -36,7 +36,7 @@ public class UsuarioService {
 		return u;
 	}
 
-	public void deleteById(String email) {
+	public void deletarPeloId(String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		
 		if (u == null) {

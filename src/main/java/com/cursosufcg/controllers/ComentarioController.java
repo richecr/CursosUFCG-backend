@@ -26,26 +26,26 @@ public class ComentarioController {
 
 	@PostMapping(value = "/{id}/{email}")
 	@ResponseBody
-	public ResponseEntity<Comentario> create(@PathVariable long id, @PathVariable String email, @RequestBody Comentario comentario) {
-		return new ResponseEntity<Comentario>( this.comentarioService.create(id, email, comentario), HttpStatus.CREATED);
+	public ResponseEntity<Comentario> comentar(@PathVariable long id, @PathVariable String email, @RequestBody Comentario comentario) {
+		return new ResponseEntity<Comentario>( this.comentarioService.comentar(id, email, comentario), HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/usuario/{email}")
-	public ResponseEntity<List<Comentario>> findByUsuario(@PathVariable String email) {
-		return new ResponseEntity<List<Comentario>>( this.comentarioService.findByUsuario(email), HttpStatus.OK);
+	public ResponseEntity<List<Comentario>> buscarPorUsuario(@PathVariable String email) {
+		return new ResponseEntity<List<Comentario>>( this.comentarioService.buscarPorUsuario(email), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/responderComentario/{idComentario}/{email}")
 	@ResponseBody
 	public ResponseEntity<Comentario> responderComentario(@PathVariable long idComentario, @PathVariable String email, @RequestBody Comentario comentario) {
-		return new ResponseEntity<Comentario>( this.comentarioService.createResponderComentario(idComentario, email, comentario), HttpStatus.CREATED);
+		return new ResponseEntity<Comentario>( this.comentarioService.responderComentario(idComentario, email, comentario), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = "/apagarComentario/{idPerfil}/{idComentario}/{email}")
 	@ResponseBody
-	public ResponseEntity<Comentario> apagaComentario(@PathVariable long idPerfil, 
+	public ResponseEntity<Comentario> apagarComentario(@PathVariable long idPerfil, 
 												  @PathVariable long idComentario, 
 												  @PathVariable String email) {
-		return new ResponseEntity<Comentario>( this.comentarioService.apagaComentario(idPerfil, idComentario, email), HttpStatus.OK);
+		return new ResponseEntity<Comentario>( this.comentarioService.apagarComentario(idPerfil, idComentario, email), HttpStatus.OK);
 	}
 }

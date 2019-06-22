@@ -28,33 +28,33 @@ public class DisciplinaController {
 	
 	@PostMapping(value = "/")
 	@ResponseBody
-	public ResponseEntity<Disciplina> create(@RequestBody Disciplina disciplina) {
-		return new ResponseEntity<Disciplina>( this.disciplinaService.create(disciplina), HttpStatus.CREATED);
+	public ResponseEntity<Disciplina> cadastrarDisciplina(@RequestBody Disciplina disciplina) {
+		return new ResponseEntity<Disciplina>( this.disciplinaService.cadastrarDisciplina(disciplina), HttpStatus.CREATED);
 	}
 	
 	@PostMapping(value = "/admin")
 	@ResponseBody
-	public ResponseEntity<List<Disciplina>> createAll(@RequestBody List<Disciplina> disciplinas) {
-		return new ResponseEntity<List<Disciplina>>( this.disciplinaService.createAll(disciplinas), HttpStatus.OK);
+	public ResponseEntity<List<Disciplina>> cadastrarVariasDisciplinas(@RequestBody List<Disciplina> disciplinas) {
+		return new ResponseEntity<List<Disciplina>>( this.disciplinaService.cadastrarVariasDisciplinas(disciplinas), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Disciplina> getId(@PathVariable long id) {
-		return new ResponseEntity<Disciplina>( this.disciplinaService.getID(id), HttpStatus.OK);
+	public ResponseEntity<Disciplina> buscarPeloId(@PathVariable long id) {
+		return new ResponseEntity<Disciplina>( this.disciplinaService.buscarPeloId(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/")
-	public ResponseEntity<List<Disciplina>> getAll() {
-		return new ResponseEntity<List<Disciplina>>( this.disciplinaService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<Disciplina>> buscarTodas() {
+		return new ResponseEntity<List<Disciplina>>( this.disciplinaService.buscarTodas(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/buscar/{query}")
-	public ResponseEntity<List<Disciplina>> findBy(@PathVariable String query) {
-		return new ResponseEntity<List<Disciplina>>( this.disciplinaService.findBy(query.toUpperCase()), HttpStatus.OK);
+	public ResponseEntity<List<Disciplina>> buscarPorQuery(@PathVariable String query) {
+		return new ResponseEntity<List<Disciplina>>( this.disciplinaService.buscarPorQuery(query.toUpperCase()), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public void deleteById(@PathVariable long id) {
-		this.disciplinaService.deleteById(id);
+	public void deletarPeloId(@PathVariable long id) {
+		this.disciplinaService.deletarPeloId(id);
 	}
 }

@@ -32,7 +32,7 @@ public class LoginController {
 	@PostMapping(value = "/")
 	@ResponseBody
 	private LoginResponse authenticate(@RequestBody Usuario usuario) {
-		Usuario u = this.usuarioService.findByEmail(usuario.getEmail());
+		Usuario u = this.usuarioService.buscarPorEmail(usuario.getEmail());
 		
 		if (u == null) {
 			throw new LoginIncorretoException("Usuário não cadastrado!");

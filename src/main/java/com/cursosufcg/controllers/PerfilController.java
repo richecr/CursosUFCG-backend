@@ -30,29 +30,23 @@ public class PerfilController {
 
 	@PostMapping(value = "/{idDisciplina}")
 	@ResponseBody
-	public ResponseEntity<Perfil> create(@PathVariable long idDisciplina, @RequestBody Perfil perfil) {
-		return new ResponseEntity<Perfil>( this.perfilService.create(idDisciplina, perfil), HttpStatus.CREATED);
+	public ResponseEntity<Perfil> cadastrarPerfil(@PathVariable long idDisciplina, @RequestBody Perfil perfil) {
+		return new ResponseEntity<Perfil>( this.perfilService.cadastrarPerfil(idDisciplina, perfil), HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Perfil> findPerfil(@PathVariable long id, @RequestParam(name="email", required=true) String email) {
-		return new ResponseEntity<Perfil>(this.perfilService.findById(id, email), HttpStatus.OK);
+		return new ResponseEntity<Perfil>(this.perfilService.procurarPorId(id, email), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/")
-	public ResponseEntity<List<Perfil>> findAllPerfil() {
-		return new ResponseEntity<List<Perfil>>(this.perfilService.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<Perfil>> buscarTodosPerfils() {
+		return new ResponseEntity<List<Perfil>>(this.perfilService.buscarTodos(), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/curtir/{id}/{email}")
 	@ResponseBody
 	public ResponseEntity<Perfil> curtir(@PathVariable long id, @PathVariable String email) {
-		return new ResponseEntity<Perfil>( this.perfilService.createCurtida(id, email), HttpStatus.CREATED);
-	}
-
-	@PostMapping(value = "/avaliar/{id}/{email}")
-	@ResponseBody
-	public ResponseEntity<Nota> avaliarPerfil(@PathVariable long id,@PathVariable String email, @RequestBody Nota nota) {
-		return new ResponseEntity<Nota>( this.perfilService.createNota(id, email, nota), HttpStatus.OK);
+		return new ResponseEntity<Perfil>( this.perfilService.curtirPerfil(id, email), HttpStatus.CREATED);
 	}
 }

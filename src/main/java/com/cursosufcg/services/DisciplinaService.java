@@ -16,27 +16,27 @@ public class DisciplinaService {
 		this.disciplinaDAO = disciplinaDAO;
 	}
 	
-	public Disciplina create(Disciplina disciplina) {
+	public Disciplina cadastrarDisciplina(Disciplina disciplina) {
 		return this.disciplinaDAO.save(disciplina);
 	}
 	
-	public List<Disciplina> createAll(List<Disciplina> disciplinas) {
+	public List<Disciplina> cadastrarVariasDisciplinas(List<Disciplina> disciplinas) {
 		return this.disciplinaDAO.saveAll(disciplinas);
 	}
 	
-	public Disciplina getID(long id) {
+	public Disciplina buscarPeloId(long id) {
 		return this.disciplinaDAO.findById(id);
 	}
 	
-	public List<Disciplina> getAll() {
+	public List<Disciplina> buscarTodas() {
 		return this.disciplinaDAO.findAll();
 	}
 	
-	public List<Disciplina> findBy(String query) {
+	public List<Disciplina> buscarPorQuery(String query) {
 		return this.disciplinaDAO.findBy(query);
 	}
 	
-	public void deleteById(long id) {
+	public void deletarPeloId(long id) {
 		this.disciplinaDAO.deleteById(id);
 	}
 }

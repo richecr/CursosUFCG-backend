@@ -30,14 +30,14 @@ public class PerfilService {
 	
 	@Autowired
 	private ComentarioService comentarioService;
+	
+	@Autowired
+	private NotaService notaService;
 
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 
-	@Autowired
-	private NotaDAO notaDAO;
-
-	public Perfil create(long id, Perfil perfil) {
+	public Perfil cadastrarPerfil(long id, Perfil perfil) {
 		Perfil p = this.perfilDAO.findById(id);
 		if (p != null) {
 			throw new RuntimeException("Perfil para essa disciplina já existe!");
@@ -49,11 +49,11 @@ public class PerfilService {
 		return this.perfilDAO.save(perfil);
 	}
 	
-	public List<Perfil> findAll() {
+	public List<Perfil> buscarTodos() {
 		return this.perfilDAO.findAll();
 	}
 
-	public Perfil findById(long id, String email) {
+	public Perfil procurarPorId(long id, String email) {
 		Perfil p = this.perfilDAO.findById(id);
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		if (p == null) {
@@ -64,14 +64,13 @@ public class PerfilService {
 		}
 
 		p.setComentarios(this.comentarioService.getAllComentarios(p, u));
-		p.setNotasDeUsuarios(this.getAllNotas(id));
 		this.verificaUsuarioCurtiu(p, u);
-		this.calculaMedia(p);
+	 	p.setMedia(this.notaService.calculaMedia(p));
 
-		return p;
+		return this.perfilDAO.save(p);
 	}
 
-	public Perfil createCurtida(long id, String email) {
+	public Perfil curtirPerfil(long id, String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
 		if (p.getCurtidas().contains(u)) {
@@ -82,31 +81,6 @@ public class PerfilService {
 
 		return this.perfilDAO.save(p);
 	}
-	
-	public Nota createNota(long id, String email, Nota nota) {
-		Usuario u = this.usuarioDAO.findByEmail(email);
-		Perfil p = this.perfilDAO.findById(id);
-
-		if (u == null) {
-			throw new UsuarioNaoEncontradoException("Usuário não cadastrado");
-		}
-
-		if (p == null) {
-			throw new RuntimeException("Perfil não existe");
-		}
-
-		Nota n = this.notaDAO.findByUsuarioPerfil(u, p);
-		if (n != null) {
-			n.setNota(nota.getNota());
-
-			return this.notaDAO.save(n);
-		} else {
-			nota.setPerfil(p);
-			nota.setUsuario(u);
-
-			return this.notaDAO.save(nota);
-		}
-	}
 
 	public List<Usuario> getAllCurtidas(long id) {
 		Perfil p = this.perfilDAO.findById(id);
@@ -114,30 +88,11 @@ public class PerfilService {
 		return p.getCurtidas();
 	}
 	
-	private List<Nota> getAllNotas(long id) {
-		Perfil p = this.perfilDAO.findById(id);
-		
-		return this.notaDAO.findByPerfil(p);
-	}
-	
 	private void verificaUsuarioCurtiu(Perfil perfil, Usuario usuario) {
 		if (perfil.getCurtidas().contains(usuario)) {
 			perfil.setUsuarioAutenticadoCurtiu(true);
 		} else {
 			perfil.setUsuarioAutenticadoCurtiu(false);
-		}
-	}
-	
-	private void calculaMedia(Perfil perfil) {
-		List<Nota> notas = perfil.getNotasDeUsuarios();
-		double soma = 0;
-		double media = 0;
-		if (!notas.isEmpty()) {
-			for (Nota nota : notas) {
-				soma += nota.getNota();
-			}
-			media = soma / (notas.size());	
-			perfil.setMedia(media);
 		}
 	}
 }
