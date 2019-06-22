@@ -50,35 +50,9 @@ public class PerfilController {
 		return new ResponseEntity<Perfil>( this.perfilService.createCurtida(id, email), HttpStatus.CREATED);
 	}
 
-	@PostMapping(value = "/comentar/{id}/{email}")
-	@ResponseBody
-	public ResponseEntity<Comentario> comentar(@PathVariable long id, @PathVariable String email, @RequestBody Comentario comentario) {
-		return new ResponseEntity<Comentario>( this.perfilService.createComentario(id, email, comentario), HttpStatus.CREATED);
-	}
-	
-	@PostMapping(value = "/responderComentario/{idComentario}/{email}")
-	@ResponseBody
-	public ResponseEntity<Comentario> responderComentario(@PathVariable long idComentario, @PathVariable String email, @RequestBody Comentario comentario) {
-		return new ResponseEntity<Comentario>( this.perfilService.createResponderComentario(idComentario, email, comentario), HttpStatus.CREATED);
-	}
-	
-	@GetMapping(value = "/comentario/{idComentario}")
-	@ResponseBody
-	public ResponseEntity<Comentario> getComentario(@PathVariable long idComentario) {
-		return new ResponseEntity<Comentario>( this.perfilService.getComentario(idComentario), HttpStatus.CREATED);
-	}
-
 	@PostMapping(value = "/avaliar/{id}/{email}")
 	@ResponseBody
 	public ResponseEntity<Nota> avaliarPerfil(@PathVariable long id,@PathVariable String email, @RequestBody Nota nota) {
 		return new ResponseEntity<Nota>( this.perfilService.createNota(id, email, nota), HttpStatus.OK);
-	}
-
-	@DeleteMapping(value = "/apagarComentario/{idPerfil}/{idComentario}/{email}")
-	@ResponseBody
-	public ResponseEntity<Comentario> apagaComentario(@PathVariable long idPerfil, 
-												  @PathVariable long idComentario, 
-												  @PathVariable String email) {
-		return new ResponseEntity<Comentario>( this.perfilService.apagaComentario(idPerfil, idComentario, email), HttpStatus.OK);
 	}
 }

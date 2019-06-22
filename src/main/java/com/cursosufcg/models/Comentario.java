@@ -1,5 +1,6 @@
 package com.cursosufcg.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -20,26 +22,25 @@ public class Comentario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	
+
 	@ManyToOne
 	private Usuario usuario;
-	
+
 	@ManyToOne
 	@JsonBackReference(value = "perfil")
 	private Perfil perfil;
-	
+
 	private String conteudo;
-	
+
 	private Date date;
-	
+
 	@OneToMany
 	private List<Comentario> respostas;
 	
 	@ManyToOne
-	@JoinColumn(referencedColumnName = "id", updatable = false, insertable = false)
 	@JsonBackReference(value = "pai")
-	private Comentario respostasPai;
-	
+	private Comentario comentarioPai;
+
 	@Transient
 	private boolean comentarioDoUsuarioAutenticado;
 	
@@ -49,13 +50,13 @@ public class Comentario {
 	}
 
 	public Comentario(Usuario usuario, Perfil perfil, Date date, List<Comentario> respostas, 
-					  Comentario respostasPai, boolean apagado) {
+					  Comentario comentarioPai, boolean apagado) {
 		super();
 		this.usuario = usuario;
 		this.perfil = perfil;
 		this.date = date;
 		this.respostas = respostas;
-		this.respostasPai = respostasPai;
+		this.comentarioPai = comentarioPai;
 		this.apagado = apagado;
 	}
 
@@ -92,7 +93,7 @@ public class Comentario {
 	}
 
 	public List<Comentario> getRespostas() {
-		return respostas;
+		return this.respostas;
 	}
 
 	public void setRespostas(List<Comentario> respostas) {
@@ -103,16 +104,16 @@ public class Comentario {
 		return conteudo;
 	}
 
+	public Comentario getComentarioPai() {
+		return comentarioPai;
+	}
+
+	public void setComentarioPai(Comentario comentarioPai) {
+		this.comentarioPai = comentarioPai;
+	}
+
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
-	}
-
-	public Comentario getRespostasPai() {
-		return respostasPai;
-	}
-
-	public void setRespostasPai(Comentario respostasPai) {
-		this.respostasPai = respostasPai;
 	}
 
 	public boolean isComentarioDoUsuarioAutenticado() {

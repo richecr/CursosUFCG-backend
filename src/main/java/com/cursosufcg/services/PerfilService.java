@@ -27,9 +27,9 @@ public class PerfilService {
 
 	@Autowired
 	private DisciplinaDAO disciplinaDAO;
-
+	
 	@Autowired
-	private ComentarioDAO comentarioDAO;
+	private ComentarioService comentarioService;
 
 	@Autowired
 	private UsuarioDAO usuarioDAO;
@@ -63,12 +63,11 @@ public class PerfilService {
 			throw new RuntimeException("Usuário não existe!");
 		}
 
-		p.setComentarios(this.getAllComentarios(id));
-		p.setNotasDeUsuarios(this.getAllNotas(id));		
-		this.verificaComentarioDoUsuario(p, u);
+		p.setComentarios(this.comentarioService.getAllComentarios(p, u));
+		p.setNotasDeUsuarios(this.getAllNotas(id));
 		this.verificaUsuarioCurtiu(p, u);
 		this.calculaMedia(p);
-		
+
 		return p;
 	}
 
@@ -82,36 +81,6 @@ public class PerfilService {
 		}
 
 		return this.perfilDAO.save(p);
-	}
-
-	public Comentario createComentario(long id, String email, Comentario comentario) {
-		Usuario u = this.usuarioDAO.findByEmail(email);
-		Perfil p = this.perfilDAO.findById(id);
-		if (u == null) {
-			throw new UsuarioNaoEncontradoException("Usuário não cadastrado");
-		}
-
-		if (p == null) {
-			throw new RuntimeException("Perfil não existe");
-		}
-		
-		comentario.setUsuario(u);
-		comentario.setPerfil(p);
-		comentario.setDate(new Date());
-		
-		return this.comentarioDAO.save(comentario);
-	}
-	
-	public Comentario createResponderComentario(long idComentario, String email, Comentario comentario) {
-		Comentario c = this.comentarioDAO.findById(idComentario);
-		Usuario usuario = this.usuarioDAO.findByEmail(email);
-
-		c.getRespostas().add(comentario);
-		comentario.setUsuario(usuario);
-		comentario.setRespostasPai(c);
-		comentario.setDate(new Date());
-		
-		return this.comentarioDAO.save(comentario);
 	}
 	
 	public Nota createNota(long id, String email, Nota nota) {
@@ -144,12 +113,6 @@ public class PerfilService {
 		
 		return p.getCurtidas();
 	}
-
-	public List<Comentario> getAllComentarios(long id) {
-		Perfil p = this.perfilDAO.findById(id);
-		
-		return this.comentarioDAO.findComentariosNaoApagadosByPerfil(p);
-	}
 	
 	private List<Nota> getAllNotas(long id) {
 		Perfil p = this.perfilDAO.findById(id);
@@ -164,28 +127,6 @@ public class PerfilService {
 			perfil.setUsuarioAutenticadoCurtiu(false);
 		}
 	}
-
-	private void verificaComentarioDoUsuario(Perfil perfil, Usuario usuario) {
-		List<Comentario> comentarios = this.comentarioDAO.findByPerfil(perfil);
-		for (Comentario comentario : comentarios) {
-			if (comentario.getUsuario().equals(usuario)) {
-				comentario.setComentarioDoUsuarioAutenticado(true);
-			} else {
-				comentario.setComentarioDoUsuarioAutenticado(false);
-			}
-			this.verificaRespostaDeComentariosDoUsuario(usuario, comentario);
-		}
-	}
-	
-	private void verificaRespostaDeComentariosDoUsuario(Usuario usuario, Comentario comentario) {
-		for (Comentario resposta : comentario.getRespostas()) {
-			if (resposta.getUsuario().equals(usuario)) {
-				resposta.setComentarioDoUsuarioAutenticado(true);
-			} else {
-				resposta.setComentarioDoUsuarioAutenticado(false);
-			}
-		}
-	}
 	
 	private void calculaMedia(Perfil perfil) {
 		List<Nota> notas = perfil.getNotasDeUsuarios();
@@ -198,30 +139,5 @@ public class PerfilService {
 			media = soma / (notas.size());	
 			perfil.setMedia(media);
 		}
-	}
-
-	public Comentario apagaComentario(long idPerfil, long idComentario, String email) {
-		Perfil perfil = this.perfilDAO.findById(idPerfil);
-		Usuario usuario = this.usuarioDAO.findByEmail(email);
-		
-		if (usuario == null) {
-			throw new UsuarioNaoEncontradoException("Usuário não cadastrado");
-		}
-
-		if (perfil == null) {
-			throw new RuntimeException("Perfil não existe");
-		}
-
-		Comentario comentario = this.comentarioDAO.findById(idComentario);
-		if (comentario == null) {
-			throw new RuntimeException("Comentário não existe!");
-		}
-
-		comentario.setApagado(true);
-		return this.comentarioDAO.save(comentario);
-	}
-
-	public Comentario getComentario(long idComentario) {
-		return this.comentarioDAO.findById(idComentario);
 	}
 }
