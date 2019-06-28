@@ -28,7 +28,7 @@ O UFCG Cursos database é uma aplicação para classificação e reviews de disc
 
   - Todos os nomes das disciplinas do curso de Ciência da Computação estão neste arquivo json. Apenas os nomes estão aí, IDs únicos devem ser gerados para cada disciplina.
 
-- [ ] - Caso de uso 3: Deve ser possível recuperar o perfil de uma disciplina a partir do seu código numérico.
+- [X] - Caso de uso 3: Deve ser possível recuperar o perfil de uma disciplina a partir do seu código numérico.
 
   - Cada disciplina deve estar associada a um perfil. Apenas usuários autenticados podem ter acesso a esta funcionalidade. O perfil de uma disciplina mantém informações que são definidas de forma colaborativa pelos usuários do UCDb. As seguintes informações fazem parte do perfil de uma disciplina: número de likes (lembrando que deve ser possível identificar se um certo usuário deu ou não like no sistema), coleção de notas dadas pelos alunos sobre a disciplina, coleção de comentários que os alunos escreveram sobre a disciplina. Ao recuperar o perfil da disciplina, deve ser possível ver a nota da disciplina, que deve ser a média aritmética de todas as notas dadas à disciplina, o número de likes e dislikes. Os comentários mantém não apenas o texto do comentário, mas o usuário que comentou e a data/hora em que o comentário foi realizado.
 
@@ -36,13 +36,13 @@ O UFCG Cursos database é uma aplicação para classificação e reviews de disc
 
   - Detalhes da view: o frontend deve exibir todos os comentários feitos, ordenados da mais recente para a mais antiga. Acima da listagem de comentários deve ser exibido algum widget para permitir ao usuário fazer um novo comentário.
 
-- [ ] - Caso de uso 4: Adicionar comentários de uma disciplina.
+- [X] - Caso de uso 4: Adicionar comentários de uma disciplina.
 
   - Usuários autenticados podem adicionar comentários aos perfis das disciplinas. Deve ser possível inserir comentários em resposta a outros comentários, sendo assim, um comentário deve manter uma referência para outro comentário.
 
   - Detalhes da view: o frontend fica livre para decidir como mostrar os comentários e os comentários em resposta a outros comentários. Diferentes sistemas colaborativos decidem diferentes formas de exibição, por exemplo, twitter e facebook.
 
-- [ ] - Caso de uso 5: Apagar comentários de uma disciplina.
+- [X] - Caso de uso 5: Apagar comentários de uma disciplina.
 
   - Um usuário autenticado pode apagar comentários que tenha feito anteriormente.
 
@@ -50,7 +50,7 @@ O UFCG Cursos database é uma aplicação para classificação e reviews de disc
 
   - Detalhe da view: na listagem de comentários, cada comentário feito pelo próprio usuário operando o sistema deve ter um widget que permita apagar o comentário.
 
-- [ ] - Caso de uso 6: Dar/retirar like em uma disciplina.
+- [X] - Caso de uso 6: Dar/retirar like em uma disciplina.
 
   - Um usuário autenticado pode dar no máximo um like na view de um perfil de uma disciplina. Significa um like para a disciplina. Um usuário que já deu like em uma disciplina não pode dar um segundo like. Depois que o usuário já deu o like ele passa a poder retirar o like (desistir de dar like).
 
