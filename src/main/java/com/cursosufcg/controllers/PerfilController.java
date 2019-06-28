@@ -34,9 +34,14 @@ public class PerfilController {
 		return new ResponseEntity<Perfil>( this.perfilService.cadastrarPerfil(idDisciplina, perfil), HttpStatus.CREATED);
 	}
 
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Perfil> findPerfil(@PathVariable long id, @RequestParam(name="email", required=true) String email) {
+	@GetMapping(value = "/{id}/{email}")
+	public ResponseEntity<Perfil> findPerfil(@PathVariable long id, @PathVariable String email) {
 		return new ResponseEntity<Perfil>(this.perfilService.procurarPorId(id, email), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/ordenarPorLikes")
+	public ResponseEntity<List<Perfil>> findPerfilOrderedByLikes() {
+		return new ResponseEntity<List<Perfil>>( this.perfilService.findPerfilOrderedByLikes(), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/")

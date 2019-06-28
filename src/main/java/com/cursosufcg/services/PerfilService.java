@@ -1,6 +1,7 @@
 package com.cursosufcg.services;
 
 import java.util.List;
+import java.util.Collections;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.cursosufcg.models.Disciplina;
 import com.cursosufcg.models.Nota;
 import com.cursosufcg.models.Perfil;
 import com.cursosufcg.models.Usuario;
+import com.cursosufcg.ordenation.OrdenaPerfilPorLikes;
 import com.cursosufcg.repository.ComentarioDAO;
 import com.cursosufcg.repository.DisciplinaDAO;
 import com.cursosufcg.repository.NotaDAO;
@@ -94,5 +96,16 @@ public class PerfilService {
 		} else {
 			perfil.setUsuarioAutenticadoCurtiu(false);
 		}
+	}
+
+	public List<Perfil> findPerfilOrderedByLikes() {
+		List<Perfil> perfils = this.perfilDAO.findAll();
+
+		if (perfils == null) {
+			throw new RuntimeException("Perfil para essa disciplina não existe!");
+		}
+		Collections.sort(perfils, new OrdenaPerfilPorLikes());
+
+		return perfils;
 	}
 }
