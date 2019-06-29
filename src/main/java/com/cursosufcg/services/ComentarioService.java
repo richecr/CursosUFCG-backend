@@ -123,6 +123,16 @@ public class ComentarioService {
 		return comentarios;
 	}
 	
+	public List<Comentario> getAllComentarios(Perfil perfil) {
+		List<Comentario> comentarios = this.comentarioDAO.findComentariosNaoApagadosByPerfil(perfil);
+		for (Comentario comentario : comentarios) {
+			List<Comentario> respostas = this.comentarioDAO.findRespostas(comentario);
+			comentario.setRespostas(respostas);
+		}
+
+		return comentarios;
+	}
+	
 	public Comentario getComentario(long idComentario) {
 		return this.comentarioDAO.findById(idComentario);
 	}

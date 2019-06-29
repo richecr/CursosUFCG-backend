@@ -15,6 +15,7 @@ import com.cursosufcg.models.Nota;
 import com.cursosufcg.models.Perfil;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.ordenation.OrdenaPerfilPorLikes;
+import com.cursosufcg.ordenation.OrdenarPerfilPorComentarios;
 import com.cursosufcg.repository.ComentarioDAO;
 import com.cursosufcg.repository.DisciplinaDAO;
 import com.cursosufcg.repository.NotaDAO;
@@ -105,6 +106,20 @@ public class PerfilService {
 			throw new RuntimeException("Perfil para essa disciplina não existe!");
 		}
 		Collections.sort(perfils, new OrdenaPerfilPorLikes());
+
+		return perfils;
+	}
+
+	public List<Perfil> findPerfilOrderedByComments() {
+		List<Perfil> perfils = this.perfilDAO.findAll();
+		if (perfils == null) {
+			throw new RuntimeException("Perfil para essa disciplina não existe!");
+		}
+
+		for (Perfil perfil : perfils) {
+			perfil.setComentarios(this.comentarioService.getAllComentarios(perfil));
+		}
+		Collections.sort(perfils, new OrdenarPerfilPorComentarios());
 
 		return perfils;
 	}

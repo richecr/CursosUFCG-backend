@@ -43,6 +43,11 @@ public class PerfilController {
 	public ResponseEntity<List<Perfil>> findPerfilOrderedByLikes() {
 		return new ResponseEntity<List<Perfil>>( this.perfilService.findPerfilOrderedByLikes(), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/ordenarPorComentarios")
+	public ResponseEntity<List<Perfil>> findPerfilOrderedByComments() {
+		return new ResponseEntity<List<Perfil>>( this.perfilService.findPerfilOrderedByComments(), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/")
 	public ResponseEntity<List<Perfil>> buscarTodosPerfils() {
