@@ -58,6 +58,6 @@ O UFCG Cursos database é uma aplicação para classificação e reviews de disc
 
   - Detalhe da view: sugere-se o uso de um widget ao estilo dos que são usados pelo youtube para funcionalidade semelhante.
 
-- [ ] - Caso de uso 7: mostrar ranking das disciplinas.
+- [X] - Caso de uso 7: mostrar ranking das disciplinas.
 
   - Um usuário autenticado pode ver o ranking das disciplinas de acordo com algum critério de livre escolha. Por exemplo, pelo número de likes, pelo número de comentários, pelo número de dislikes, pela proporção de likes/(likes+dislikes), etc.
