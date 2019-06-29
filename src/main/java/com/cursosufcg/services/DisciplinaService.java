@@ -2,15 +2,20 @@ package com.cursosufcg.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cursosufcg.models.Disciplina;
+import com.cursosufcg.models.Perfil;
 import com.cursosufcg.repository.DisciplinaDAO;
 
 @Service
 public class DisciplinaService {
 
 	private final DisciplinaDAO disciplinaDAO;
+	
+	@Autowired
+	private PerfilService perfilService;
 	
 	public DisciplinaService(DisciplinaDAO disciplinaDAO) {
 		this.disciplinaDAO = disciplinaDAO;
@@ -21,7 +26,12 @@ public class DisciplinaService {
 	}
 	
 	public List<Disciplina> cadastrarVariasDisciplinas(List<Disciplina> disciplinas) {
-		return this.disciplinaDAO.saveAll(disciplinas);
+		List<Disciplina> disciplinasSaida = this.disciplinaDAO.saveAll(disciplinas);
+		for (Disciplina disciplina : disciplinas) {
+			this.perfilService.cadastrarPerfil(disciplina.getId(), new Perfil());
+		}
+
+		return disciplinasSaida;
 	}
 	
 	public Disciplina buscarPeloId(long id) {
