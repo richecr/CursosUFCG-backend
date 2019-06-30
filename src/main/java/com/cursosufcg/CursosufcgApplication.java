@@ -31,7 +31,9 @@ public class CursosufcgApplication {
 			FilterRegistrationBean<TokenFilter> filterRb = new FilterRegistrationBean<>();
 			filterRb.setFilter(new TokenFilter());
 			System.out.println("OKOK");
-			filterRb.addUrlPatterns("/v1/sem/*");
+			filterRb.addUrlPatterns("/v1/perfil/*");
+			filterRb.addUrlPatterns("/v1/disciplina/*");
+			filterRb.addUrlPatterns("/v1/comentario/*");
 			
 			return filterRb;
 		} catch (Exception e) {
