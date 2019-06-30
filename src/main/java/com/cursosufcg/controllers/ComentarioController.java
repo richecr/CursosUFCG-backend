@@ -34,6 +34,12 @@ public class ComentarioController {
 	public ResponseEntity<List<Comentario>> buscarPorUsuario(@PathVariable String email) {
 		return new ResponseEntity<List<Comentario>>( this.comentarioService.buscarPorUsuario(email), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/respostas/{id}/{email}")
+	@ResponseBody
+	public ResponseEntity<List<Comentario>> buscarRespostas(@PathVariable long id, @PathVariable String email) {
+		return new ResponseEntity<List<Comentario>>( this.comentarioService.buscarRespostas(id, email), HttpStatus.OK);
+	}
 
 	@PostMapping(value = "/responderComentario/{idComentario}/{email}")
 	@ResponseBody

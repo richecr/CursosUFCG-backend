@@ -136,4 +136,22 @@ public class ComentarioService {
 	public Comentario getComentario(long idComentario) {
 		return this.comentarioDAO.findById(idComentario);
 	}
+
+	public List<Comentario> buscarRespostas(long idComentarioPai, String email) {
+		Comentario c = this.comentarioDAO.findById(idComentarioPai);
+		Usuario u = this.usuarioDAO.findByEmail(email);
+
+		if (c == null) {
+			throw new RuntimeException("Comentário não existe!");
+		}
+
+		if (u == null) {
+			throw new UsuarioNaoEncontradoException("Usuário não existe!");
+		}
+
+		List<Comentario> comentarios = this.comentarioDAO.findRespostas(c);
+		this.verificaComentarioDoUsuario(comentarios, u);
+
+		return comentarios;
+	}
 }

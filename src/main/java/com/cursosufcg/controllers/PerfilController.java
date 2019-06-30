@@ -53,6 +53,12 @@ public class PerfilController {
 	public ResponseEntity<List<Perfil>> buscarTodosPerfils() {
 		return new ResponseEntity<List<Perfil>>(this.perfilService.buscarTodos(), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/buscar/{query}")
+	@ResponseBody
+	public ResponseEntity<List<Perfil>> buscarTodosPerfilsPelaQuery(@PathVariable String query) {
+		return new ResponseEntity<List<Perfil>>(this.perfilService.buscarTodosPerfilsPelaQuery(query.toUpperCase()), HttpStatus.OK);
+	}
 
 	@PostMapping(value = "/curtir/{id}/{email}")
 	@ResponseBody

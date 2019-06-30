@@ -15,6 +15,7 @@ import com.cursosufcg.models.Nota;
 import com.cursosufcg.models.Perfil;
 import com.cursosufcg.models.Usuario;
 import com.cursosufcg.ordenation.OrdenaPerfilPorLikes;
+import com.cursosufcg.ordenation.OrdenarComentariosPorData;
 import com.cursosufcg.ordenation.OrdenarPerfilPorComentarios;
 import com.cursosufcg.repository.ComentarioDAO;
 import com.cursosufcg.repository.DisciplinaDAO;
@@ -65,8 +66,9 @@ public class PerfilService {
 		if (u == null) {
 			throw new RuntimeException("Usuário não existe!");
 		}
-
-		p.setComentarios(this.comentarioService.getAllComentarios(p, u));
+		List<Comentario> comentarios = this.comentarioService.getAllComentarios(p, u);
+		Collections.sort(comentarios, new OrdenarComentariosPorData());
+		p.setComentarios(comentarios);
 		this.verificaUsuarioCurtiu(p, u);
 	 	p.setMedia(this.notaService.calculaMedia(p));
 
@@ -122,5 +124,10 @@ public class PerfilService {
 		Collections.sort(perfils, new OrdenarPerfilPorComentarios());
 
 		return perfils;
+	}
+
+	public List<Perfil> buscarTodosPerfilsPelaQuery(String query) {
+		System.out.println(query);
+		return this.perfilDAO.findByQuery(query);
 	}
 }
