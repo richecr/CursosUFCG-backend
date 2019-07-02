@@ -16,8 +16,12 @@ import com.cursosufcg.models.Usuario;
 import com.cursosufcg.services.UsuarioService;
 import com.cursosufcg.utils.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping({"/v1/usuario"})
+@Api(value= "Controller de Usuário")
 public class UsuarioController {
 
 	private UsuarioService usuarioService;
@@ -28,11 +32,13 @@ public class UsuarioController {
 		this.enviarEmail = enviarEmail;
 	}
 	
+	@ApiOperation(value = "Retorna usuário pelo email")
 	@GetMapping("/{email}")
 	public ResponseEntity<Usuario> listarUsuario(@PathVariable String email) {
 		return new ResponseEntity<Usuario>( this.usuarioService.buscarPorEmail(email), HttpStatus.OK );
 	}
 	
+	@ApiOperation(value = "Cria um usuário")
 	@PostMapping(value = "/")
 	@ResponseBody
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
@@ -46,6 +52,7 @@ public class UsuarioController {
 		return new ResponseEntity<Usuario>( u, HttpStatus.CREATED );
 	}
 	
+	@ApiOperation(value = "Apaga um usuário")
 	@DeleteMapping(value = "/{email}")
 	public ResponseEntity deletarUsuario(@PathVariable String email) {
 		this.usuarioService.deletarPeloId(email);

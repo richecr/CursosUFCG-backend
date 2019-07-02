@@ -7,12 +7,14 @@ import org.springframework.context.annotation.Bean;
 
 import com.cursosufcg.authentication.TokenFilter;
 
+
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
 public class CursosufcgApplication {
+	
 
 	@Bean
 	public FilterRegistrationBean corsFilter() {

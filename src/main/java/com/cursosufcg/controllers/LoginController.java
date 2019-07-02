@@ -17,10 +17,13 @@ import com.cursosufcg.services.UsuarioService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RestController
 @RequestMapping({"/v1/login"})
+@Api(value = "Controller de Login")
 public class LoginController {
 	
 	private final String TOKEN_KEY = "bananas";
@@ -28,7 +31,7 @@ public class LoginController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	
+	@ApiOperation(value = "Realiza login de um usuário")
 	@PostMapping(value = "/")
 	@ResponseBody
 	private LoginResponse authenticate(@RequestBody Usuario usuario) {
