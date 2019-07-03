@@ -4,6 +4,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -33,18 +34,14 @@ public class SwaggerConfig {
 
     private ApiInfo metaInfo() {
 
-        ApiInfo apiInfo = new ApiInfo(
-                "CursosUFCG API REST",
-                "API REST de disciplinas da UFCG.",
-                "1.0",
-                "Terms of Service",
-                new Contact("Igor Silveira & Rich Elton","https://igorsilveira7.github.io/CursosUFCG/src/view/index.html",
-                        "cursosufcg@gmail.com"),
-                "Apache License Version 2.0",
-                "https://www.apache.org/licesen.html", new ArrayList<VendorExtension>()
-        );
-
-        return apiInfo;
+        return new ApiInfoBuilder()
+        		.title("CursosUFCG API REST")
+                .description("API REST de disciplinas da UFCG.")
+                .contact(new Contact("Igor Silveira & Rich Elton", "https://igorsilveira7.github.io/CursosUFCG/src/view/index.html", "cursosufcg@gmail.com"))
+                .license("Apache 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .version("1.0.0")
+                .build();
     }
 
 }

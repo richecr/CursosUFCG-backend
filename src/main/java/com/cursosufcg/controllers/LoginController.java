@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RestController
 @RequestMapping({"/v1/login"})
-@Api(value = "Controller de Login")
+@Api(value = "Controller de Login", description = "Responsável por controlar as funcionalidades de login")
 public class LoginController {
 	
 	private final String TOKEN_KEY = "bananas";

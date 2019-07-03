@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping({"/v1/comentario"})
-@Api(value = "Controller de Comentário")
+@Api(value = "Controller de Comentário", description = "Responsável por controlar as funcionalidades que um comentário possui")
 public class ComentarioController {
 
 	@Autowired

@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping({"/v1/usuario"})
-@Api(value= "Controller de Usuário")
+@Api(value= "Controller de Usuário", description = "Responsável por controlar as funcionalidades que uma usuário possui")
 public class UsuarioController {
 
 	private UsuarioService usuarioService;

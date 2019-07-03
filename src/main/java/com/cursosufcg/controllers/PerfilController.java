@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping({"/v1/perfil"})
-@Api(value = "Controller de Perfil")
+@Api(value = "Controller de Perfil", description = "Responsável por controlar as funcionalidades que um perfil possui")
 public class PerfilController {
 
 	@Autowired

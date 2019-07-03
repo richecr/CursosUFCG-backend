@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping({"/v1/disciplina"})
-@Api(value = "Controller de Disciplina")
+@Api(value = "Controller de Disciplina", description = "Responsável por controlar as funcionalidades que uma disciplina possui")
 public class DisciplinaController {
 
 	private DisciplinaService disciplinaService;
