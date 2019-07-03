@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cursosufcg.exceptions.disciplina.DisciplinaIncorreta;
+import com.cursosufcg.exceptions.disciplina.DisciplinaNotFound;
 import com.cursosufcg.models.Disciplina;
 import com.cursosufcg.models.Perfil;
 import com.cursosufcg.repository.DisciplinaDAO;
@@ -22,6 +24,10 @@ public class DisciplinaService {
 	}
 	
 	public Disciplina cadastrarDisciplina(Disciplina disciplina) {
+		if ("".equals(disciplina.getNome()) || disciplina.getNome() == null) {
+			throw new DisciplinaIncorreta("Nome da disciplina não pode ser vazio!");
+		}
+
 		return this.disciplinaDAO.save(disciplina);
 	}
 	
@@ -35,7 +41,12 @@ public class DisciplinaService {
 	}
 	
 	public Disciplina buscarPeloId(long id) {
-		return this.disciplinaDAO.findById(id);
+		Disciplina disciplina = this.disciplinaDAO.findById(id);
+		if (disciplina == null) {
+			throw new DisciplinaNotFound("Disciplina não existe!");
+		}
+
+		return disciplina;
 	}
 	
 	public List<Disciplina> buscarTodas() {
@@ -47,6 +58,9 @@ public class DisciplinaService {
 	}
 	
 	public void deletarPeloId(long id) {
-		this.disciplinaDAO.deleteById(id);
+		Disciplina disciplina = this.disciplinaDAO.findById(id);
+		if (disciplina == null) {
+			throw new DisciplinaNotFound("Disciplina não existe!");
+		}
 	}
 }

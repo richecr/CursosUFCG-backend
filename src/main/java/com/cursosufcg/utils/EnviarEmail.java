@@ -15,7 +15,8 @@ public class EnviarEmail {
 	
 	public String enviarEmail(String emailDestinatario) {
 		SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("Bem-vindo ao sistema de Cursos da UFCG!");
+		message.setSubject("Cadastro no sistema CursosUFCG");
+        message.setText("Seja bem-vindo ao sistema de Cursos da UFCG!");
         message.setTo(emailDestinatario);
 
         try {

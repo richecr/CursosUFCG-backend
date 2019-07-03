@@ -18,31 +18,28 @@ public class UsuarioService {
 	
 	public Usuario cadastrarUsuario(Usuario usuario) {
 		Usuario u = this.usuarioDAO.findByEmail(usuario.getEmail());
-		
 		if (u != null) {
 			throw new UsuarioJaExisteException("Usuário com esse email já existe!");
 		}
-		
+
 		return this.usuarioDAO.save(usuario);
 	}
 
 	public Usuario buscarPorEmail(String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
-		
 		if (u == null) {
 			throw new UsuarioNaoEncontradoException("Usuário não existe!");
 		}
-		
+
 		return u;
 	}
 
 	public void deletarPeloId(String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
-		
 		if (u == null) {
 			throw new UsuarioNaoEncontradoException("Usuário não existe!");
 		}
-		
+
 		this.usuarioDAO.deleteById(email);
 	}
 }

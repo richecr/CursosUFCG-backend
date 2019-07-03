@@ -11,7 +11,13 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.cursosufcg.exceptions.autenticacao.LoginIncorretoException;
 import com.cursosufcg.exceptions.autenticacao.TokenIncorretoException;
+import com.cursosufcg.exceptions.comentario.ComentarioNotFound;
+import com.cursosufcg.exceptions.comentario.ComentarioTextoVazio;
+import com.cursosufcg.exceptions.disciplina.DisciplinaIncorreta;
+import com.cursosufcg.exceptions.disciplina.DisciplinaNotFound;
 import com.cursosufcg.exceptions.email.EmailNaoEnviadoException;
+import com.cursosufcg.exceptions.perfil.PerfilJaExiste;
+import com.cursosufcg.exceptions.perfil.PerfilNotFound;
 import com.cursosufcg.exceptions.usuario.UsuarioJaExisteException;
 import com.cursosufcg.exceptions.usuario.UsuarioNaoEncontradoException;
 
@@ -59,5 +65,46 @@ public class RestExceptionHandler {
 
 		 return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	 }
+	 
+	 @ExceptionHandler({PerfilNotFound.class})
+	 public ResponseEntity<CustomRestError> perfilNotFound(Exception ex, WebRequest request) {
+		 CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
+
+		 return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	 }
+	 
+	 @ExceptionHandler({PerfilJaExiste.class})
+	 public ResponseEntity<CustomRestError> perfilJaExiste(Exception ex, WebRequest request) {
+		 CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
+
+		 return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	 }
+	 
+	 @ExceptionHandler({ComentarioNotFound.class})
+	 public ResponseEntity<CustomRestError> comentariolNotFound(Exception ex, WebRequest request) {
+		 CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
+
+		 return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	 }
+	 
+	 @ExceptionHandler({ComentarioTextoVazio.class})
+	 public ResponseEntity<CustomRestError> comentariolTextoVazio(Exception ex, WebRequest request) {
+		 CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
+
+		 return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	 }
+	 
+	 @ExceptionHandler({DisciplinaIncorreta.class})
+	 public ResponseEntity<CustomRestError> disciplinalIncorreta(Exception ex, WebRequest request) {
+		 CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
+
+		 return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	 }
 	
+	 @ExceptionHandler({DisciplinaNotFound.class})
+	 public ResponseEntity<CustomRestError> disciplinalNotFound(Exception ex, WebRequest request) {
+		 CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
+
+		 return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+	 }
 }

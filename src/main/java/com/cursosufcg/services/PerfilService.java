@@ -7,6 +7,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cursosufcg.exceptions.disciplina.DisciplinaNotFound;
+import com.cursosufcg.exceptions.perfil.PerfilNotFound;
 import com.cursosufcg.exceptions.usuario.UsuarioNaoEncontradoException;
 import com.cursosufcg.models.Comentario;
 
@@ -43,10 +45,13 @@ public class PerfilService {
 
 	public Perfil cadastrarPerfil(long id, Perfil perfil) {
 		Perfil p = this.perfilDAO.findById(id);
-		if (p != null) {
-			throw new RuntimeException("Perfil para essa disciplina já existe!");
-		}
 		Disciplina d = this.disciplinaDAO.findById(id);
+		if (p != null) {
+			throw new PerfilNotFound("Perfil para essa disciplina já existe!");
+		}
+		if (d == null) {
+			throw new DisciplinaNotFound("Disciplina para perfil não existe!");
+		}
 		perfil.setId(id);
 		perfil.setDisciplina(d);
 
@@ -61,10 +66,10 @@ public class PerfilService {
 		Perfil p = this.perfilDAO.findById(id);
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		if (p == null) {
-			throw new RuntimeException("Perfil para essa disciplina não existe!");
+			throw new PerfilNotFound("Perfil para essa disciplina não existe!");
 		}
 		if (u == null) {
-			throw new RuntimeException("Usuário não existe!");
+			throw new UsuarioNaoEncontradoException("Usuário não existe!");
 		}
 		List<Comentario> comentarios = this.comentarioService.getAllComentarios(p, u);
 		Collections.sort(comentarios, new OrdenarComentariosPorData());
@@ -78,6 +83,13 @@ public class PerfilService {
 	public Perfil curtirPerfil(long id, String email) {
 		Usuario u = this.usuarioDAO.findByEmail(email);
 		Perfil p = this.perfilDAO.findById(id);
+		if (p == null) {
+			throw new PerfilNotFound("Perfil para essa disciplina não existe!");
+		}
+		if (u == null) {
+			throw new UsuarioNaoEncontradoException("Usuário não existe!");
+		}
+
 		if (p.getCurtidas().contains(u)) {
 			p.getCurtidas().remove(u);
 		} else {
@@ -89,7 +101,10 @@ public class PerfilService {
 
 	public List<Usuario> getAllCurtidas(long id) {
 		Perfil p = this.perfilDAO.findById(id);
-		
+		if (p == null) {
+			throw new PerfilNotFound("Perfil para essa disciplina não existe!");
+		}
+
 		return p.getCurtidas();
 	}
 	
@@ -127,7 +142,6 @@ public class PerfilService {
 	}
 
 	public List<Perfil> buscarTodosPerfilsPelaQuery(String query) {
-		System.out.println(query);
 		return this.perfilDAO.findByQuery(query);
 	}
 }
