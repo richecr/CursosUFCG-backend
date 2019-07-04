@@ -1,4 +1,4 @@
-# [Cursos UFCG](https://api-cursosufcg.herokuapp.com/api/swagger-ui.html/)
+# [Cursos UFCG](https://api-cursosufcg.herokuapp.com/api/swagger-ui.html)
 > Repositório para o Back-end do projeto da disciplina de Projeto de Software
 
 ## UCDb: classificações e reviews de cursos da UFCG
