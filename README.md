@@ -43,6 +43,70 @@ Rota       | Método   |  Função    |  Parâmetros   |
 - ### Usuário: Responsável por controlar as funcionalidades que uma usuário possui
 Rota       | Método   |  Função    |  Parâmetros   |
 :--------- | :------: | :--------- | :-----------  |
-/v1/usuario/ | GET | Cria um usuário |
+/v1/usuario/ | POST | Cria um usuário |
 /v1/usuario/{email} | DELETE | Apaga um usuário | 
 /v1/usuario/{email} | GET | Retorna um usuário pelo email | 
+
+------------------
+
+## Explicação básica da API Rest
+> Explicação básica sobre o funcionamento da API.
+
+- A API Rest trata-se de mostrar as informações básicas sobre uma disciplina da UFCG, por enquanto apenas do Curso de Computação.
+
+- Algumas rotas são privadas, apenas usuário com `token` poderão fazer requisições. Caso não tenham, terão que se cadastrar e depois realizar o login, essa última irá retornar um `token` no corpo da resposta.
+
+- Existe uma rota: `/v1/disciplina/admin` que é usada para cadastrar todas as disciplinas e juntamente criando os perfis das mesmas. A rota recebe uma lista com os nomes das disciplinas.
+
+- Um usuário autenticado consegue: Criar comentários, responder comentários, curtir(descurtir) os perfis, fazer listagens dos perfis por quantidade de likes e por comentários. Todas as rotas necessitam que o `token`seja passado no `header`da requisição.
+
+- Um usuário não autenticado: Consegue apenas listar as disicplinas(não consegue ver os perfis).
+
+## Diretórios:
+> Explicação básica de cada diretório.
+
+- `./authentication`: Onde os arquivos de Filtragem de token ficam, cada requisição feita irá passar pela classe `TokenFilter` para ser realizado a verificação do `token`
+
+- `./config`: Onde encontra apenas um arquivo, responsável pela configuração da documentação da API, Swagger.
+
+- `./controllers`: Onde encontra-se todos os meus controles da aplicação, todas as rotas possiveis estão descritas nos meus controles.
+
+- `./exceptions`: Onde estão as minhas exceções, e padronização das minhas Exceções para o `response`
+
+- `./ models`: Onde estão os meus modelos, com a anotação `Entity`, tornando elas uma entidade no meu banco de dados.
+
+- `./ordenation`: Onde estão as classes de ordenação de meus perfis.
+
+- `./repository`: Onde estão os meus `DAO`(Data Access Object ou Objeto de Acesso a Dados). Onde seu principal objetivo é separar regras de negócio de regras de acesso a banco de dados.
+
+- `./services`: Onde estão meus servições de cada `DAO` da minha aplicação. Onde irá ocorrer cada verificação ou regra de negócio antes de chamar algum método do meu `DAO`.
+
+- `./utils`: Onde está minha classe responsável por enviar um email para o usuário após ele se cadastrar.
+
+## Testando a API localmente(Caso vá usar a URL do heroku, as disicplinas e perfis já estão criadas):
+
+- Antes de tudo devemos criar um usuário pela rota: `/v1/usuario/`, passando no body da requisição:
+  ~~~javascript
+  {
+      "email": "string",
+      "primeiroNome": "string",
+      "senha": "string",
+      "ultimoNome": "string"
+  }
+  ~~~
+
+- Após a criação, devemos realizar o login, para termos o nosso `token`, pela rota: `/v1/login/`, passando no body da requisição:
+~~~javascript
+  {
+      "email": "string",
+      "senha": "string",
+  }
+  ~~~
+
+- Após isso devemos cadastrar nossas disciplinas: encontra-se no [arquivo](https://drive.google.com/file/d/1r3WFTRwqh8TrQ0f5DvNO6362hhkYnglz/view). Pode ser cadastradas pela rota: `/v1/disciplina/admin`. Passando no corpo da requisição o contéudo do arquivo acima, passando o `token` na requisição(no header).
+
+- Depois disso, poderá ser realizado todas as demais funcionalidades do sistema: Criar outros usuários, cadastrar disciplinas, ver perfis e suas informações, comentar, responder, curtir e etc.
+
+
+
+
