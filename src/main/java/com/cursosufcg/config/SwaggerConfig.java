@@ -36,7 +36,7 @@ public class SwaggerConfig {
 
         return new ApiInfoBuilder()
         		.title("CursosUFCG API REST")
-                .description("API REST de disciplinas da UFCG.")
+                .description("API REST de disciplinas da UFCG")
                 .contact(new Contact("Igor Silveira & Rich Elton", "https://igorsilveira7.github.io/CursosUFCG/src/view/index.html", "cursosufcg@gmail.com"))
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
