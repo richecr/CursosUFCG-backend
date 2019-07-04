@@ -1,10 +1,11 @@
 # [Cursos UFCG](https://api-cursosufcg.herokuapp.com/api/swagger-ui.html)
 > Repositório para o Back-end do projeto da disciplina de Projeto de Software
 
+----------------
 ## Rotas:
 > Rotas da API Rest.
 
-### Comentários: Responsável por controlar as funcionalidades que um comentário possui
+- ### Comentários: Responsável por controlar as funcionalidades que um comentário possui
 Rota       | Método   |  Função    |  Parâmetros   |
 :--------- | :------: | :--------- | :-----------  |
 /v1/comentario/{id}/{email} | POST | Cria um comentário no perfil especificado pelo ID | id: Id do perfil, email: Email do usuário
@@ -13,7 +14,7 @@ Rota       | Método   |  Função    |  Parâmetros   |
 /v1/comentario/responderComentario/{idComentario}/{email} | POST | Cria resposta de um comentário | id: id do comentário, email: Email do usuário
 /v1/comentario/apagarComentario/{idPerfil}/{idComentario}/{email} | DELETE | Apaga um comentário de um perfi | idPerfil: id do perfil, idComentario: id do comentário, email: email do usuário que quer apagar o comentário.
 
-### Disciplinas: Responsável por controlar as funcionalidades que uma disciplina possui
+- ### Disciplinas: Responsável por controlar as funcionalidades que uma disciplina possui
 Rota       | Método   |  Função    |  Parâmetros   |
 :--------- | :------: | :--------- | :-----------  |
 /v1/disciplina/ | GET | Retorna todas as disciplinas |
@@ -23,12 +24,12 @@ Rota       | Método   |  Função    |  Parâmetros   |
 /v1/disciplina/admin | POST | Cria várias disciplinas | 
 /v1/disciplina/{id} | DELETE | Apaga uma disciplina | id: id da disciplina a ser deletada
 
-### Login:  Responsável por controlar as funcionalidades de login
+- ### Login:  Responsável por controlar as funcionalidades de login
 Rota       | Método   |  Função    |  Parâmetros   |
 :--------- | :------: | :--------- | :-----------  |
 /v1/login/ | POST | Realiza um login de um usuário
 
-### Perfil: Responsável por controlar as funcionalidades que um perfil possui
+- ### Perfil: Responsável por controlar as funcionalidades que um perfil possui
 Rota       | Método   |  Função    |  Parâmetros   |
 :--------- | :------: | :--------- | :-----------  |
 /v1/perfil/ | GET | Retorna todos os perfis | 
@@ -39,7 +40,7 @@ Rota       | Método   |  Função    |  Parâmetros   |
 /v1/perfil/{idDisciplina} | POST | Cadastra um perfil | idDisciplina: id da disciplina
 /v1/perfil/{id}/{email} | GET | Retorna um perfil pelo id | id: id do perfil, email: email do usuário
 
-### Usuário: Responsável por controlar as funcionalidades que uma usuário possui
+- ### Usuário: Responsável por controlar as funcionalidades que uma usuário possui
 Rota       | Método   |  Função    |  Parâmetros   |
 :--------- | :------: | :--------- | :-----------  |
 /v1/usuario/ | GET | Cria um usuário |
