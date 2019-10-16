@@ -1,7 +1,19 @@
 # [Cursos UFCG](https://api-cursosufcg.herokuapp.com/api/swagger-ui.html)
 > Repositório para o Back-end do projeto da disciplina de Projeto de Software
 
-----------------
+## Explicação básica da API Rest
+> Explicação básica sobre o funcionamento da API.
+
+- A API Rest trata-se de mostrar as informações básicas sobre uma disciplina da UFCG, por enquanto apenas do Curso de Computação.
+
+- Algumas rotas são privadas, apenas usuário com `token` poderão fazer requisições. Caso não tenham, terão que se cadastrar e depois realizar o login, essa última irá retornar um `token` no corpo da resposta.
+
+- Existe uma rota: `/v1/disciplina/admin` que é usada para cadastrar todas as disciplinas e juntamente criando os perfis das mesmas. A rota recebe uma lista com os nomes das disciplinas.
+
+- Um usuário autenticado consegue: Criar comentários, responder comentários, curtir(descurtir) os perfis, fazer listagens dos perfis por quantidade de likes e por comentários. Todas as rotas necessitam que o `token`seja passado no `header`da requisição.
+
+- Um usuário não autenticado: Consegue apenas listar as disicplinas(não consegue ver os perfis).
+
 ## Rotas:
 > Rotas da API Rest.
 
@@ -47,21 +59,6 @@ Rota       | Método   |  Função    |  Parâmetros   |
 /v1/usuario/{email} | DELETE | Apaga um usuário | 
 /v1/usuario/{email} | GET | Retorna um usuário pelo email | 
 
-------------------
-
-## Explicação básica da API Rest
-> Explicação básica sobre o funcionamento da API.
-
-- A API Rest trata-se de mostrar as informações básicas sobre uma disciplina da UFCG, por enquanto apenas do Curso de Computação.
-
-- Algumas rotas são privadas, apenas usuário com `token` poderão fazer requisições. Caso não tenham, terão que se cadastrar e depois realizar o login, essa última irá retornar um `token` no corpo da resposta.
-
-- Existe uma rota: `/v1/disciplina/admin` que é usada para cadastrar todas as disciplinas e juntamente criando os perfis das mesmas. A rota recebe uma lista com os nomes das disciplinas.
-
-- Um usuário autenticado consegue: Criar comentários, responder comentários, curtir(descurtir) os perfis, fazer listagens dos perfis por quantidade de likes e por comentários. Todas as rotas necessitam que o `token`seja passado no `header`da requisição.
-
-- Um usuário não autenticado: Consegue apenas listar as disicplinas(não consegue ver os perfis).
-
 ## Diretórios:
 > Explicação básica de cada diretório.
 
@@ -83,7 +80,8 @@ Rota       | Método   |  Função    |  Parâmetros   |
 
 - `./utils`: Onde está minha classe responsável por enviar um email para o usuário após ele se cadastrar.
 
-## Testando a API localmente(Caso vá usar a URL do heroku, as disicplinas e perfis já estão criadas):
+## Testando a API localmente:
+> Caso vá usar a URL do heroku, as disicplinas e perfis já estão criadas.
 
 - Antes de tudo devemos criar um usuário pela rota: `/v1/usuario/`, passando no body da requisição:
   ~~~javascript
@@ -106,7 +104,3 @@ Rota       | Método   |  Função    |  Parâmetros   |
 - Após isso devemos cadastrar nossas disciplinas: encontra-se no [arquivo](https://drive.google.com/file/d/1r3WFTRwqh8TrQ0f5DvNO6362hhkYnglz/view). Pode ser cadastradas pela rota: `/v1/disciplina/admin`. Passando no corpo da requisição o contéudo do arquivo acima, passando o `token` na requisição(no header).
 
 - Depois disso, poderá ser realizado todas as demais funcionalidades do sistema: Criar outros usuários, cadastrar disciplinas, ver perfis e suas informações, comentar, responder, curtir e etc.
-
-
-
-
