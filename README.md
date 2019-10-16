@@ -1,6 +1,10 @@
 # [Cursos UFCG](https://api-cursosufcg.herokuapp.com/api/swagger-ui.html)
 > Repositório para o Back-end do projeto da disciplina de Projeto de Software
 
+## Links Importantes:
+
+- [Front-end](https://github.com/IgorSilveira7/CursosUFCG)
+
 ## Explicação básica da API Rest
 > Explicação básica sobre o funcionamento da API.
 
